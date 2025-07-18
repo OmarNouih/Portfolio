@@ -9,35 +9,98 @@
     <link rel="stylesheet" href="./assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link id='favicon' rel="shortcut icon" href="./assets/images/favicon.png" type="image/x-png">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <title>Portfolio | NOUIH Omar</title>
 </head>
 <body oncontextmenu="return false">
 
-  <header>
-        <a href="/" class="logo"></i> NOUIH Omar</a>
-
-        <div id="menu" class="fas fa-bars"></div>
-        <nav class="navbar">
-            <ul>
-            <li><a class="active" href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#education">Education</a></li>
-            <li><a href="#certifications">Certifications</a></li>
-            <li><a href="#work">Work</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
+<header>
+  <a href="#home" class="logo" aria-label="Go to home">NOUIH Omar</a>
+  <button id="menu" class="fas fa-bars" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation"></button>
+  <nav class="navbar" id="primary-nav">
+    <ul>
+      <li><a class="active" href="#home">HOME</a></li>
+      <li><a href="#about">ABOUT</a></li>
+      <li><a href="#skills">SKILLS</a></li>
+      <li><a href="#education">EDUCATION</a></li>
+      <li><a href="#certifications">CERTIFICATIONS</a></li>
+      <li><a href="#work">PROJECTS</a></li>
+      <li><a href="#experience">EXPERIENCE</a></li>
+      <li><a href="#contact">CONTACT</a></li>
+    </ul>
+  </nav>
 </header>
+<script>
+(function(){
+  const header = document.querySelector('header');
+  const menuBtn = document.getElementById('menu');
+  const nav = header.querySelector('.navbar');
+  const links = Array.from(nav.querySelectorAll('a[href^="#"]'));
+
+  /* scroll shadow state */
+  function setScrolled(){ 
+    header.classList.toggle('is-scrolled', window.scrollY > 10);
+  }
+  setScrolled();
+  window.addEventListener('scroll', setScrolled);
+
+  /* mobile toggle */
+  function toggleNav(){
+    nav.classList.toggle('nav-toggle');
+    menuBtn.classList.toggle('fa-times');
+    const expanded = nav.classList.contains('nav-toggle');
+    menuBtn.setAttribute('aria-expanded', expanded ? 'true':'false');
+  }
+  menuBtn.addEventListener('click', toggleNav);
+
+  /* close nav on link click (mobile) + set active */
+  links.forEach(link=>{
+    link.addEventListener('click', e=>{
+      // update active class immediately for visual feedback
+      links.forEach(l=>l.classList.remove('active'));
+      e.currentTarget.classList.add('active');
+
+      // close mobile nav if open
+      if(nav.classList.contains('nav-toggle')){
+        nav.classList.remove('nav-toggle');
+        menuBtn.classList.remove('fa-times');
+        menuBtn.setAttribute('aria-expanded','false');
+      }
+    });
+  });
+
+  /* highlight active section on scroll */
+  const sectionEls = links
+    .map(l=>document.querySelector(l.getAttribute('href')))
+    .filter(Boolean);
+
+  function updateActiveOnScroll(){
+    const offset = header.offsetHeight + 40; // header + margin
+    let currentId = null;
+    for(const sec of sectionEls){
+      const rect = sec.getBoundingClientRect();
+      if(rect.top - offset <= 0 && rect.bottom - offset > 0){
+        currentId = '#'+sec.id;
+        break;
+      }
+    }
+    if(currentId){
+      links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')===currentId));
+    }
+  }
+  window.addEventListener('scroll', updateActiveOnScroll, {passive:true});
+  window.addEventListener('resize', updateActiveOnScroll);
+  updateActiveOnScroll();
+})();
+</script>
 
 <section class="home" id="home">
   <div id="particles-js"></div>
-
   <div class="content">
-      <h2>Hi There,<br/> I'm Omar <span>Nouih</span></h2>
-      <p>I am a <span class="typing-text">Data Scientist</span></p>
-      <a href="#about" class="btn"><span>About Me</span>
+      <h2>HI THERE,<br/> I'M OMAR <span>NOUIH</span></h2>
+      <p>I AM A <span class="typing-text">DATA SCIENTIST</span></p>
+      <a href="#about" class="btn"><span>ABOUT ME</span>
           <i class="fas fa-arrow-circle-down"></i>
       </a>
       <div class="socials">
@@ -52,7 +115,7 @@
       </div>
   </div>
   <div class="image">
-      <img draggable="false" class="tilt" src="./assets/images/2.jpg" alt="">
+      <img draggable="false" class="tilt" src="./assets/images/5.jpeg" alt="">
   </div>
 </section>
 
@@ -60,187 +123,290 @@
     <h2 class="heading">ABOUT <span style="color: #ffcc00">ME </span><i class="fas fa-user-alt"></i></h2>
     <div class="about-container">
         <div class="content">
-            <h3>I'm <span style="color: #ffcc00">NOUIH Omar</span></h3>
-            <span class="tag">Data Scientist & Software Developer</span>
-            <blockquote class="quote">"With a passion for AI, I turn ideas into innovative solutions."</blockquote>
-            <p>Data Scientist & Software Developer based in Berrechid, Morocco. With a passion for artificial intelligence and machine learning, I have worked on various projects that focus on innovative applications of AI in fields like human resources and agriculture.</p>
-            <p>Currently pursuing a Master's in AI and Data Science at FST Tanger, I am always looking for new challenges and opportunities to apply my skills in real-world scenarios. I am proficient in a wide range of technologies including Python, Java, Flask, and machine learning frameworks.</p>
-            <div class="box-container">
-                <div class="box">
-                  <p><span>Email:</span> omarnouih@gmail.com / omar.nouih@etu.uae.ac.ma</p>
-                  <p><span>Location:</span> Berrechid, Morocco</p>
-                  <p><span>Phone:</span> 0709725235 </p>
+            <h3>I'M <span style="color: #ffcc00">NOUIH OMAR</span></h3>
+            <span class="tag">DATA SCIENTIST & AI ENGINEER</span>
+                  <blockquote class="quote">"WITH A PASSION FOR AI, I TURN IDEAS INTO INNOVATIVE SOLUTIONS."</blockquote>
+                  <p>DATA SCIENTIST & SOFTWARE DEVELOPER BASED IN BERRECHID, MOROCCO. WITH A PASSION FOR ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING, I HAVE WORKED ON VARIOUS PROJECTS THAT APPLY AI TO FIELDS LIKE HUMAN RESOURCES, AVIATION, AND AGRICULTURE.</p>
+                  <p>HOLDER OF A MASTER'S DEGREE IN ARTIFICIAL INTELLIGENCE AND DATA SCIENCE FROM FST TANGER, I AM ACTIVELY SEEKING NEW PROFESSIONAL OPPORTUNITIES WHERE I CAN APPLY MY SKILLS TO SOLVE REAL-WORLD CHALLENGES. I AM PROFICIENT IN TECHNOLOGIES SUCH AS PYTHON, JAVA, FLASK, AND SEVERAL MACHINE LEARNING FRAMEWORKS INCLUDING PYTORCH AND SCIKIT-LEARN.</p>
+              <div class="box-container">
+               <div class="box">
+                  <p><span>EMAIL:</span> OMARNOUIH@GMAIL.COM</p>
+                  <p><span>LOCATION:</span> BERRECHID, MOROCCO</p>
+                  <p><span>PHONE:</span> 0709725235 </p>
               </div>
             </div>
             <div class="resumebtn">
-                <a href="CV_NOUIH.pdf" target="_blank" class="btn"><span>Resume</span>
+                <a href="CV_NHOMAR.pdf" target="_blank" class="btn"><span>RESUME</span>
                     <i class="fas fa-chevron-right"></i>
                 </a>
             </div>
         </div>
     </div>
-  </section>
+</section>
     
 <section class="skills" id="skills">
-    <h2 class="heading"> SKILLS & <span>ABILITIES</span> <i class="fas fa-laptop-code"></i></h2>
-    <div class="container">
-        <div class="row" id="skillsContainer">
-            <div class="bar">
-                <div class="info">
-                    <img src="https://img.icons8.com/color/48/000000/python.png"/>
-                    <span>Python</span>
-                </div>
-            </div>
-            <div class="bar">
-                <div class="info">
-                    <img src="https://img.icons8.com/color/48/000000/java-coffee-cup-logo.png"/>
-                    <span>Java</span>
-                </div>
-            </div>
-            <div class="bar">
-                <div class="info">
-                    <img src="https://img.icons8.com/color/48/000000/php.png"/>
-                    <span>PHP</span>
-                </div>
-            </div>
-            <div class="bar">
-                <div class="info">
-                    <img src="https://img.icons8.com/color/48/000000/html-5.png"/>
-                    <span>HTML5</span>
-                </div>
-            </div>
-            <div class="bar">
-                <div class="info">
-                    <img src="https://img.icons8.com/color/48/000000/css3.png"/>
-                    <span>CSS3</span>
-                </div>
-            </div>
-            <div class="bar">
-                <div class="info">
-                    <img src="https://img.icons8.com/color/48/000000/flask.png"/>
-                    <span>Flask</span>
-                </div>
-            </div>
-            <div class="bar">
-                <div class="info">
-                    <img src="https://img.icons8.com/color/48/000000/django.png"/>
-                    <span>Django</span>
-                </div>
-            </div>
-            <div class="bar">
-                <div class="info">
-                    <img src="https://img.icons8.com/color/48/000000/mysql-logo.png"/>
-                    <span>MySQL</span>
-                </div>
-            </div>
-            <div class="bar">
-                <div class="info">
-                    <img src="https://img.icons8.com/color/48/000000/mongodb.png"/>
-                    <span>MongoDB</span>
-                </div>
-            </div>
-            <div class="bar">
-                <div class="info">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Apache_Spark_logo.svg" style="width: 90px; height: auto;"/>
-                    <span>Apache Spark</span>
-                </div>
-            </div>
-            <div class="bar">
-                <div class="info">
-                    <img src="https://www.ovhcloud.com/sites/default/files/styles/text_media_horizontal/public/2021-09/ECX-1909_Hero_Kafka_600x400%402x-1.webp" style="width: 120px; height: auto;"/>
-                    <span>Apache Kafka</span>
-                </div>
-            </div>
-            <div class="bar">
-                <div class="info">
-                    <img src="https://img.icons8.com/color/48/000000/pycharm.png"/>
-                    <span>PyCharm</span>
-                </div>
-            </div>
-            <div class="bar">
-                <div class="info">
-                    <img src="https://img.icons8.com/color/48/000000/tensorflow.png"/>
-                    <span>TensorFlow</span>
-                </div>
-            </div>
-            <div class="bar">
-                <div class="info">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg" style="width: 90px; height: auto;"/>
-                    <span>Scikit-Learn</span>
-                </div>
-            </div>
-            <div class="bar">
-                <div class="info">
-                    <img src="https://img.icons8.com/color/48/000000/adobe-photoshop.png"/>
-                    <span>Photoshop</span>
-                </div>
-            </div>
-            <div class="bar">
-                <div class="info">
-                    <img src="https://img.icons8.com/color/48/000000/canva.png"/>
-                    <span>Canva</span>
-                </div>
-            </div>
-            <div class="bar">
-                <div class="info">
-                    <img src="https://img.icons8.com/color/48/000000/tensorflow.png"/>
-                    <span>Keras</span>
-                </div>
-            </div>
-            <div class="bar">
-                <div class="info">
-                    <img src="https://img.icons8.com/color/48/000000/github.png"/>
-                    <span>Git & GitHub</span>
-                </div>
-            </div>
-            <div class="bar">
-                <div class="info">
-                    <img src="https://img.icons8.com/color/48/000000/docker.png"/>
-                    <span>Docker</span>
-                </div>
-            </div>
-            <div class="bar">
-                <div class="info">
-                    <img src="https://img.icons8.com/color/48/000000/power-bi.png"/>
-                    <span>Power BI</span>
-                </div>
-            </div>
-            <div class="bar">
-                <div class="info">
-                    <img src="https://img.icons8.com/color/48/000000/latex.png"/>
-                    <span>LaTeX</span>
-                </div>
-            </div>
-        </div>
-    </div>
-  </section>
-  
-<section class="education" id="education">
-  <h2 class="heading"> MY <span>EDUCATION </span><i class="fas fa-graduation-cap"></i></h2>
-  <center><p class="quote">"Education is not the learning of facts, but the training of the mind to think."</p></center>
-  <div class="box-container">
-      <div class="box">
-          <div class="image">
-              <img draggable="false" src="./assets/images/educat/FSTT.jpg" alt="Faculty of Science and Technology, Tanger">
-          </div>
-          <div class="content">
-              <h3>Master of Sciences and Techniques in AI and Data Science</h3>
-              <p>Faculty of Sciences and Techniques, Tanger</p>
-              <h4>2023 - Present</h4>
-          </div>
+  <h2 class="heading">SKILLS &amp; <span>ABILITIES</span> <i class="fas fa-laptop-code"></i></h2>
+  <div class="container">
+    <div class="skills-groups">
+
+      <!-- ========== CORE AI & DATA SCIENCE ========== -->
+      <h3 class="skills-cat"><i class="fas fa-brain"></i> Core AI &amp; Data Science</h3>
+      <div class="skills-grid" data-cat="ai-ml">
+        <div class="bar"><div class="info">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
+          <span>Python</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch">
+          <span>PyTorch</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow">
+          <span>TensorFlow</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/keras.svg" alt="Keras">
+          <span>Keras</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/scikitlearn.svg" alt="Scikit-learn">
+          <span>Scikit-learn</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/huggingface.svg" alt="Hugging Face">
+          <span>Transformers / HF</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/spacy.svg" alt="SpaCy">
+          <span>SpaCy / NLP</span>
+        </div></div>
+        <div class="bar "><div class="info">
+          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/langchain.svg" alt="LangChain">
+          <span>LangChain &amp; LLM</span>
+        </div></div>
       </div>
-      <div class="box" style="max-height: 177px;">
-          <div class="image">
-              <img draggable="false" src="./assets/images/educat/FSTBM.jpg" alt="Faculty of Science and Technology, Beni Mellal">
-          </div>
-          <div class="content">
-              <h3>Bachelor of Sciences and Techniques in Computer Science</h3>
-              <p>Faculty of Sciences and Techniques, Beni Mellal</p>
-              <h4>2019 - 2023</h4>
-          </div>
+
+      <!-- ========== BIG DATA & REAL‑TIME PIPELINES ========== -->
+      <h3 class="skills-cat"><i class="fas fa-database"></i> Big Data &amp; Real‑Time</h3>
+      <div class="skills-grid" data-cat="bigdata">
+        <div class="bar"><div class="info">
+          <img src="https://icon.icepanel.io/Technology/svg/Apache-Spark.svg" alt="Apache Spark">
+          <span>Apache Spark</span>
+        </div></div>
+        <div class="bar"><div class="info">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/apachespark.svg" alt="PySpark">
+          <span>PySpark</span>
+        </div></div>
+        <div class="bar"><div class="info">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/apachespark.svg" alt="Spark Streaming">
+          <span>Spark Streaming</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/apachekafka.svg" alt="Apache Kafka">
+          <span>Apache Kafka</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apacheairflow/apacheairflow-original.svg" alt="Apache Airflow">
+          <span>Airflow</span>
+        </div></div>
       </div>
-  </div>
+
+      <!-- ========== DATA PLATFORMS & DATABASES ========== -->
+      <h3 class="skills-cat"><i class="fas fa-server"></i> Data Platforms &amp; Databases</h3>
+      <div class="skills-grid" data-cat="databases">
+        <div class="bar"><div class="info">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
+          <span>MySQL</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL">
+          <span>PostgreSQL</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg" alt="SQL Server">
+          <span>SQL Server</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB">
+          <span>MongoDB</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg" alt="SQLite">
+          <span>SQLite</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/googlebigquery.svg" alt="BigQuery">
+          <span>BigQuery</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/databricks.svg" alt="Databricks">
+          <span>Databricks</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/redash.svg" alt="Databricks">
+          <span>Redash</span>
+        </div></div>
+      </div>
+
+      <!-- ========== BACKEND, APIS & WEB ========== -->
+      <h3 class="skills-cat"><i class="fas fa-code"></i> Backend, APIs &amp; Web</h3>
+      <div class="skills-grid" data-cat="backend">
+        <div class="bar"><div class="info">
+          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/fastapi.svg" alt="FastAPI">
+          <span>FastAPI</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" alt="Flask">
+          <span>Flask</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img class="invertable" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django">
+          <span>Django</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg" alt="Angular">
+          <span>Angular</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
+          <span>HTML5</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
+          <span>CSS3</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
+          <span>Java</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP">
+          <span>PHP</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <!-- PyQt -->
+          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/qt.svg" alt="Qt / PyQt">
+          <span>PyQt</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/python.svg" alt="Qt / PyQt">
+          <span>Tkinter</span>
+        </div></div>
+      </div>
+
+      <!-- ========== DEVOPS, CLOUD & PRODUCTIVITY ========== -->
+      <h3 class="skills-cat"><i class="fas fa-tools"></i> DevOps, Cloud &amp; Productivity</h3>
+      <div class="skills-grid" data-cat="devops">
+        <div class="bar"><div class="info">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker">
+          <span>Docker</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git">
+          <span>Git</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub">
+          <span>GitHub</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <!-- PyCharm -->
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pycharm/pycharm-original.svg" alt="PyCharm">
+          <span>PyCharm</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <!-- Linux -->
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux">
+          <span>Linux (Ubuntu)</span>
+        </div></div>
+      </div>
+
+      <!-- ========== DATA VIZ, DOCS & CREATIVE ========== -->
+      <h3 class="skills-cat"><i class="fas fa-chart-line"></i> Data Viz, Docs &amp; Creative</h3>
+      <div class="skills-grid" data-cat="viz">
+        <div class="bar"><div class="info">
+          <!-- Power BI officiel (noir) -->
+          <img class="si" src="https://upload.wikimedia.org/wikipedia/commons/c/c9/Power_bi_logo_black.svg" alt="Power BI">
+          <span>Power BI</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <!-- Looker Studio (SimpleIcons looker) -->
+          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/looker.svg" alt="Looker Studio">
+          <span>Looker Studio</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <!-- Matplotlib -->
+          <img class="si" src="https://upload.wikimedia.org/wikipedia/commons/8/84/Matplotlib_icon.svg" alt="Matplotlib">
+          <span>Matplotlib</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/adobephotoshop.svg" alt="Photoshop">
+          <span>Photoshop</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/canva.svg" alt="Canva">
+          <span>Canva</span>
+        </div></div>
+        <div class="bar"><div class="info">
+          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/latex.svg" alt="LaTeX">
+          <span>LaTeX</span>
+        </div></div>
+      </div>
+
+
+    </div><!-- /.skills-groups -->
+  </div><!-- /.container -->
 </section>
+  
+<section class="education edu-section" id="education">
+  <h2 class="heading">MY <span>EDUCATION</span> <i class="fas fa-graduation-cap"></i></h2>
+
+  <p class="edu-quote">
+    <span class="edu-quote-mark">"</span>
+    EDUCATION IS THE KEY TO UNLOCKING THE WORLD, A PASSPORT TO FREEDOM.
+    <span class="edu-quote-mark">"</span>
+  </p>
+
+<div class="edu-cards">
+  <!-- ====== MASTER ====== -->
+  <article class="edu-card tilt">
+    <div class="edu-accent"></div>
+    <div class="edu-img-wrap">
+      <img src="assets/images/educat/FSTT.jpg" alt="Faculty of Science and Technology, Tanger" loading="lazy">
+      <span class="edu-badge">MASTER</span>
+    </div>
+    <div class="edu-content">
+      <h3 class="edu-degree">MASTER / INTELLIGENCE ARTIFICIELLE & DATA SCIENCE</h3>
+      <p class="edu-school">FACULTÉ DES SCIENCES & TECHNIQUES, TANGER</p>
+      <p class="edu-years"><i class="far fa-calendar-alt"></i> 2023 &ndash; 2025</p>
+      <ul class="edu-highlights">
+        <li>Deep Learning, NLP, Vision par ordinateur, LLMs, RAG.</li>
+        <li>Projets : Chatbot académique FSTT, Analyse sentiment Twitter, etc.</li>
+        <li>Mémoire : Assistant conversationnel SQL (Labelvie, GPT-4o + LangChain).</li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- ====== BACHELOR ====== -->
+  <article class="edu-card tilt">
+    <div class="edu-accent"></div>
+    <div class="edu-img-wrap">
+      <img src="assets/images/educat/FSTBM.jpg" alt="Faculty of Science and Technology, Beni Mellal" loading="lazy">
+      <span class="edu-badge">BACHELOR</span>
+    </div>
+    <div class="edu-content">
+      <h3 class="edu-degree">LICENCE / GÉNIE INFORMATIQUE</h3>
+      <p class="edu-school">FACULTÉ DES SCIENCES & TECHNIQUES, BENI MELLAL</p>
+      <p class="edu-years"><i class="far fa-calendar-alt"></i> 2019 &ndash; 2023</p>
+      <ul class="edu-highlights">
+        <li>JAVA, C, PHP, Full Stack Web, Bases de données.</li>
+        <li>Projets : Chatbot RH (Rasa/Twilio), Plateforme services étudiants.</li>
+      </ul>
+    </div>
+  </article>
+</div>
+</section>
+
 
 <section class="certifications" id="certifications">
   <h2 class="heading">CERTIFICATIONS <span style="color: #ffcc00" >ACHIEVED </span> <i class="fas fa-award"></i></h2>
@@ -250,9 +416,9 @@
         <img draggable="false" src="assets\images\certa\ML.png" alt="IBM Certification" style="width: 250px; height: 200px;">
       </div>
       <div class="content">
-        <h3>IBM Machine Learning professional</h3>
-        <p>Completed the IBM Machine Learning, covering essential topics in machine learning and artificial intelligence. This certification confirms the development of skills in Unsupervised Learning, Supervised Learning, Deep Learning, and Reinforcement Learning.</p>
-        <p><a href="https://coursera.org/verify/professional-cert/K39QSKVM3XLV" >Verify this certificate</a></p>
+        <h3>IBM ML PROFESSIONAL</h3>
+        <p>COMPLETED THE IBM MACHINE LEARNING, COVERING ESSENTIAL TOPICS IN MACHINE LEARNING AND ARTIFICIAL INTELLIGENCE. THIS CERTIFICATION CONFIRMS THE DEVELOPMENT OF SKILLS IN UNSUPERVISED LEARNING, SUPERVISED LEARNING, DEEP LEARNING, AND REINFORCEMENT LEARNING.</p>
+        <p><a href="https://coursera.org/verify/professional-cert/K39QSKVM3XLV" >VERIFY THIS CERTIFICATE</a></p>
       </div>
     </div>
 
@@ -261,10 +427,10 @@
         <img draggable="false" src="assets\images\certa\AI.png" alt="AI Fundamentals Certification" style="width: 250px; height: 200px;">
       </div>
       <div class="content">
-        <h3>Artificial Intelligence Fundamentals | SkillUp</h3>
-        <p>This certificate is presented to Omar NOUIH for the completion of Artificial Intelligence Fundamentals in 2024.</p>
-        <p>According to the Your Learning Builder - Plans system of record, the completion certificate was awarded on 03 Jun 2024 (GMT).</p>
-        <p><a href="https://skills.yourlearning.ibm.com/certificate/share/8914299c08ewogICJvYmplY3RJZCIgOiAiUExBTi1FODVEMDU3MjI2MkMiLAogICJvYmplY3RUeXBlIiA6ICJBQ1RJVklUWSIsCiAgImxlYXJuZXJDTlVNIiA6ICIyNzk4MTU0UkVHIgp9b96ecdcbfc-10" >Verify this certificate</a></p>
+        <h3>AI FUNDAMENTALS | SKILLUP</h3>
+        <p>THIS CERTIFICATE IS PRESENTED TO OMAR NOUIH FOR THE COMPLETION OF ARTIFICIAL INTELLIGENCE FUNDAMENTALS IN 2024.</p>
+        <p>ACCORDING TO THE YOUR LEARNING BUILDER - PLANS SYSTEM OF RECORD, THE COMPLETION CERTIFICATE WAS AWARDED ON 03 JUN 2024 (GMT).</p>
+        <p><a href="https://skills.yourlearning.ibm.com/certificate/share/8914299c08ewogICJvYmplY3RJZCIgOiAiUExBTi1FODVEMDU3MjI2MkMiLAogICJvYmplY3RUeXBlIiA6ICJBQ1RJVklUWSIsCiAgImxlYXJuZXJDTlVNIiA6ICIyNzk4MTU0UkVHIgp9b96ecdcbfc-10" >VERIFY THIS CERTIFICATE</a></p>
       </div>
     </div>
   </div>
@@ -396,86 +562,270 @@
     </div>
   </section>
   
-<section class="experience" id="experience">
-    <h2 class="heading"> PROFESSIONAL <span style="color: #ffc107;">EXPERIENCE</span> <i class="fas fa-briefcase"></i></h2>
-    <div class="timeline">
-      <!-- Royal Air Maroc (Left Side) -->
-      <div class="container left">
-        <div class="content">
-          <div class="tag">
-            <h2 style="color: #0d47a1;">ROYAL AIR MAROC </h2>
-          </div>
-          <div class="desc">
-              <h3>Chatbot Developer | Internship</h3>
-              <p style="color: #0d47a1;">April 2023 - June 2023</p>
-              <ul style="padding: 10px;">
-                  <li>Designed and developed a chatbot for human resources, leveraging the <strong>Rasa</strong> framework for natural language processing and dialogue management.</li>
-                  <li>Integrated advanced <strong>natural language understanding (NLU)</strong> features using <strong>SpaCy</strong> to enhance chatbot interactions.</li>
-                  <li>Developed a <strong>Flask-based API</strong> to connect the chatbot with internal systems, streamlining HR communications and processes.</li>
-                  <li>Deployed the chatbot on <strong>WhatsApp</strong> using <strong>Twilio</strong>, allowing seamless real-time conversations with employees.</li>
-              </ul>
-          </div>
+    <section class="experience" id="experience">
+        <h2 class="heading">PROFESSIONAL <span>EXPERIENCE</span> <i class="fas fa-briefcase"></i></h2>
+        
+        <div class="box-container">
+            <!-- ================= Labelvie Group ================= -->
+            <div class="box">
+                <div class="content xp-card">
+                    <div class="xp-head">
+                        <div class="xp-logo-wrap">
+                            <img src="./assets/images/labelvie.png" alt="Labelvie Group logo" class="xp-logo" onerror="this.style.display='none';this.parentElement.classList.add('xp-logo-fallback');">
+                            <span class="xp-logo-fallback-text">LV</span>
+                        </div>
+                        <div class="xp-head-meta">
+                            <h3 class="xp-role">AI Engineer & Data Scientist Intern (PFE)</h3>
+                            <h4 class="xp-company">Labelvie Group</h4>
+                            <p class="xp-dates">Mar 2025 – Present</p>
+                        </div>
+                    </div>
+
+                    <ul class="xp-points">
+                        <li>Built enterprise-grade <strong>conversational analytics assistant</strong> integrating WhatsApp/Telegram with <strong>natural language → SQL</strong> generation using <strong>GPT-4o</strong> and <strong>LangChain</strong>, enabling business stakeholders to query retail data in plain language.</li>
+                        <li>Implemented <strong>role-based access control</strong> with query sanitization, audit logging, and data masking for sensitive PII/financial data, ensuring compliance with data governance standards.</li>
+                        <li>Developed automated <strong>executive dashboards</strong> in <strong>Power BI</strong> and <strong>Looker Studio</strong> with real-time refresh capabilities, reducing manual reporting time by 80%.</li>
+                        <li>Created robust <strong>data quality monitoring</strong> system with Python validators and performance diagnostics for high-volume query optimization (handling 10M+ records daily).</li>
+                    </ul>
+
+                    <div class="xp-impact">
+                        <h4>Key Impact & Achievements</h4>
+                        <div class="xp-metrics">
+                            <div class="xp-metric">
+                                <span class="xp-metric-value">95%</span>
+                                <span class="xp-metric-label">Query Accuracy</span>
+                            </div>
+                            <div class="xp-metric">
+                                <span class="xp-metric-value">80%</span>
+                                <span class="xp-metric-label">Time Reduction</span>
+                            </div>
+                            <div class="xp-metric">
+                                <span class="xp-metric-value">10K+</span>
+                                <span class="xp-metric-label">Records/Day</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="xp-stack" aria-label="Key technologies used">
+                        <span>GPT-4o</span><span>LangChain</span><span>Azure SQL</span><span>Python</span><span>Power BI</span><span>Looker Studio</span><span>Docker</span><span>FLASK</span><span>REDASH</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= 3D Smart Factory ================= -->
+            <div class="box">
+                <div class="content xp-card">
+                    <div class="xp-head">
+                        <div class="xp-logo-wrap">
+                            <img src="./assets/images/3dsmartfactory.png" alt="3D Smart Factory logo" class="xp-logo" onerror="this.style.display='none';this.parentElement.classList.add('xp-logo-fallback');">
+                            <span class="xp-logo-fallback-text">3D</span>
+                        </div>
+                        <div class="xp-head-meta">
+                            <h3 class="xp-role">Data Scientist & Lead Developer</h3>
+                            <h4 class="xp-company">3D Smart Factory</h4>
+                            <p class="xp-dates">Jul 2024 – Sep 2024</p>
+                        </div>
+                    </div>
+
+                    <ul class="xp-points">
+                        <li>Architected and developed <strong>RucRut</strong> - an AI-powered recruitment platform featuring advanced <strong>CV parsing</strong>, <strong>semantic matching</strong> between candidates and job requirements, and automated interview question generation using <strong>Hugging Face Transformers</strong>.</li>
+                        <li>Implemented <strong>vector similarity search</strong> with <strong>Sentence Transformers</strong> achieving 87% matching accuracy, significantly improving candidate-job fit over traditional keyword matching.</li>
+                        <li>Built scalable <strong>RESTful microservices</strong> architecture with <strong>Flask</strong> and <strong>MongoDB</strong>, supporting multi-tenant recruiter workflows with real-time collaboration features.</li>
+                        <li>Developed comprehensive <strong>analytics dashboard</strong> using <strong>Angular</strong> with advanced visualizations showing recruitment funnel metrics, candidate scoring distribution, and hiring manager insights.</li>
+                    </ul>
+
+                    <div class="xp-impact">
+                        <h4>Key Impact & Achievements</h4>
+                        <div class="xp-metrics">
+                            <div class="xp-metric">
+                                <span class="xp-metric-value">87%</span>
+                                <span class="xp-metric-label">Match Accuracy</span>
+                            </div>
+                            <div class="xp-metric">
+                                <span class="xp-metric-value">60%</span>
+                                <span class="xp-metric-label">Screening Time ↓</span>
+                            </div>
+                            <div class="xp-metric">
+                                <span class="xp-metric-value">400+</span>
+                                <span class="xp-metric-label">CVs Processed</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="xp-stack" aria-label="Key technologies used">
+                        <span>Hugging Face</span><span>Sentence Transformers</span><span>Flask</span><span>MongoDB</span><span>Angular</span><span>Python</span><span>scikit-learn</span><span>NLTK</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= Royal Air Maroc ================= -->
+            <div class="box">
+                <div class="content xp-card">
+                    <div class="xp-head">
+                        <div class="xp-logo-wrap">
+                            <img src="./assets/images/royalairmaroc.png" alt="Royal Air Maroc logo" class="xp-logo" onerror="this.style.display='none';this.parentElement.classList.add('xp-logo-fallback');">
+                            <span class="xp-logo-fallback-text">RAM</span>
+                        </div>
+                        <div class="xp-head-meta">
+                            <h3 class="xp-role">NLP Engineer & Chatbot Developer</h3>
+                            <h4 class="xp-company">Royal Air Maroc</h4>
+                            <p class="xp-dates">Apr 2023 – Jun 2023</p>
+                        </div>
+                    </div>
+
+                    <ul class="xp-points">
+                        <li>Developed intelligent <strong>HR virtual assistant</strong> using <strong>Rasa NLU</strong> framework with custom <strong>SpaCy</strong> models, achieving 92% intent classification accuracy for employee queries across 50+ HR scenarios.</li>
+                        <li>Integrated with legacy <strong>HR systems</strong> via custom <strong>Flask APIs</strong>, enabling seamless access to leave management, benefits information, and document retrieval with proper authentication.</li>
+                        <li>Successfully deployed production chatbot to <strong>WhatsApp Business</strong> via <strong>Twilio integration</strong>, serving 2000+ employees with 24/7 automated support capabilities.</li>
+                        <li>Built comprehensive <strong>analytics dashboard</strong> tracking conversation flows, intent distribution, and user satisfaction metrics, enabling continuous model improvement and identifying knowledge gaps.</li>
+                    </ul>
+
+                    <div class="xp-impact">
+                        <h4>Key Impact & Achievements</h4>
+                        <div class="xp-metrics">
+                            <div class="xp-metric">
+                                <span class="xp-metric-value">92%</span>
+                                <span class="xp-metric-label">Intent Accuracy</span>
+                            </div>
+                            <div class="xp-metric">
+                                <span class="xp-metric-value">2000+</span>
+                                <span class="xp-metric-label">Active Users</span>
+                            </div>
+                            <div class="xp-metric">
+                                <span class="xp-metric-value">75%</span>
+                                <span class="xp-metric-label">HR Ticket ↓</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="xp-stack" aria-label="Key technologies used">
+                        <span>Rasa</span><span>SpaCy</span><span>Flask</span><span>Twilio</span><span>WhatsApp API</span><span>Python</span><span>PostgreSQL</span><span>Redis</span>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      
-      <!-- 3D Smart Factory (Right Side) -->
-      <div class="container right">
-        <div class="content">
-          <div class="tag">
-            <h2 style="color: #0d47a1;">3D SMART FACTORY</h2>
-          </div>
-          <div class="desc">
-              <h3>Data Scientist & Lead Developer | Internship & Project</h3>
-              <p style="color: #0d47a1;">July 2023 - September 2023</p>
-              <ul style="padding: 10px;">
-                  <li>Developed <strong>RucRut</strong>, an AI-powered recruitment platform using <strong>Hugging Face</strong> and <strong>Sentence Transformers</strong> for personalized interview questions and real-time candidate feedback.</li>
-                  <li>Designed and implemented the system using <strong>Flask</strong>, integrating a user-friendly dashboard for recruiters.</li>
-                  <li>Created a machine learning-based system for identifying plant diseases, providing real-time assistance for farmers using <strong>Python</strong> and <strong>TensorFlow</strong>.</li>
-                  <li>Built a custom French-language chatbot for the Faculty of Science and Technology, Tanger, to assist students with university services.</li>
-              </ul>
-          </div>
-        </div>
-      </div>
-  
+    </section>
+
+    <script>
+        /* ==========================================================
+           EXPERIENCE CARDS SCROLLER – auto setup
+           ========================================================== */
+        (function(){
+            const section = document.querySelector('section.experience#experience');
+            if(!section) return;
+
+            const track = section.querySelector('.box-container');
+            if(!track) return;
+
+            const cards = Array.from(track.querySelectorAll('.box'));
+            if(!cards.length) return;
+
+            /* ---------- Inject controls (arrows + dots) ---------- */
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'exp-scroll-btn exp-scroll-prev';
+            prevBtn.type = 'button';
+            prevBtn.innerHTML = '<i class="fas fa-chevron-left" aria-hidden="true"></i><span class="sr-only">Previous</span>';
+
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'exp-scroll-btn exp-scroll-next';
+            nextBtn.type = 'button';
+            nextBtn.innerHTML = '<i class="fas fa-chevron-right" aria-hidden="true"></i><span class="sr-only">Next</span>';
+
+            const dotsWrap = document.createElement('div');
+            dotsWrap.className = 'exp-scroll-dots';
+            cards.forEach((c,i)=>{
+                const b = document.createElement('button');
+                b.className = 'exp-scroll-dot' + (i===0 ? ' is-active' : '');
+                b.type = 'button';
+                b.dataset.index = i;
+                b.innerHTML = '<span class="sr-only">Go to experience '+(i+1)+'</span>';
+                dotsWrap.appendChild(b);
+            });
+
+            section.appendChild(prevBtn);
+            section.appendChild(nextBtn);
+            section.appendChild(dotsWrap);
+
+            const dots = Array.from(dotsWrap.querySelectorAll('.exp-scroll-dot'));
+
+            /* ---------- Scroll helpers ---------- */
+            function scrollToIndex(i){
+                if(i < 0) i = 0;
+                if(i >= cards.length) i = cards.length - 1;
+                cards[i].scrollIntoView({behavior:'smooth', inline:'start', block:'nearest'});
+            }
+
+            function currentIndex(){
+                const trackRect = track.getBoundingClientRect();
+                let best = 0, bestDist = Infinity;
+                cards.forEach((card,i)=>{
+                    const r = card.getBoundingClientRect();
+                    const center = r.left + r.width/2;
+                    const dist = Math.abs(center - (trackRect.left + trackRect.width/2));
+                    if(dist < bestDist){bestDist = dist; best = i;}
+                });
+                return best;
+            }
+
+            function updateUI(){
+                const idx = currentIndex();
+                dots.forEach((d,i)=>{
+                    const active = i===idx;
+                    d.classList.toggle('is-active', active);
+                    d.setAttribute('aria-selected',active?'true':'false');
+                });
+                prevBtn.disabled = (idx === 0);
+                nextBtn.disabled = (idx === cards.length - 1);
+                prevBtn.classList.toggle('is-disabled', prevBtn.disabled);
+                nextBtn.classList.toggle('is-disabled', nextBtn.disabled);
+            }
+
+            /* ---------- Events ---------- */
+            prevBtn.addEventListener('click', ()=>scrollToIndex(currentIndex()-1));
+            nextBtn.addEventListener('click', ()=>scrollToIndex(currentIndex()+1));
+            dots.forEach(d=>d.addEventListener('click',()=>scrollToIndex(parseInt(d.dataset.index,10))));
+            track.addEventListener('scroll', ()=>window.requestAnimationFrame(updateUI));
+
+})();
+</script>
+
+<section class="contact" id="contact">
+  <h2 class="heading" style="color: #0d47a1;">
+    <i class="fas fa-headset"></i> GET IN <span style="color: #ffc107;">TOUCH</span>
+  </h2>
+
+  <div class="container contact-container">
+    <div class="image-box">
+      <img draggable="true" src="./assets/images/hero.jpg" alt="Profile Image" class="profile-img">
     </div>
-  </section>
-  
-  
-  <section class="contact" id="contact">
-    <h2 class="heading" style="color: #0d47a1;"><i class="fas fa-headset"></i> GET IN <span style="color: #ffc107;">TOUCH</span></h2>
-  
-    <div class="container">
-      <div class="content">
-        <div class="image-box">
-          <img draggable="false" src="./assets/images/contact2.png" alt="Contact Image">
+
+    <form id="contact-form">
+      <div class="form-group">
+        <div class="field">
+          <input type="text" name="name" placeholder="Name" required>
+          <i class='fas fa-user'></i>
         </div>
-        <form id="contact-form">
-          <div class="form-group">
-            <div class="field">
-              <input type="text" name="name" placeholder="Name" required>
-              <i class='fas fa-user'></i>
-            </div>
-            <div class="field">
-              <input type="email" name="email" placeholder="Email" required>
-              <i class='fas fa-envelope'></i>
-            </div>
-            <div class="field">
-              <input type="tel" name="phone" placeholder="Phone">
-              <i class='fas fa-phone-alt'></i>
-            </div>
-            <div class="message">
-              <textarea placeholder="Message" name="message" required></textarea>
-              <i class="fas fa-comment-dots"></i>
-            </div>
-          </div>
-          <div class="button-area">
-            <button type="submit">Submit <i class="fa fa-paper-plane"></i></button>
-          </div>
-        </form>
+        <div class="field">
+          <input type="email" name="email" placeholder="Email" required>
+          <i class='fas fa-envelope'></i>
+        </div>
+        <div class="field">
+          <input type="tel" name="phone" placeholder="Phone">
+          <i class='fas fa-phone-alt'></i>
+        </div>
+        <div class="message">
+          <textarea placeholder="Message" name="message" required></textarea>
+          <i class="fas fa-comment-dots"></i>
+        </div>
       </div>
-    </div>
-  </section>
-  
+      <div class="button-area">
+       <button type="submit">Submit <i class="fa fa-paper-plane"></i></button></center>
+      </div>
+    </form>
+  </div>
+</section>
+
+
 <section class="footer">
 
   <div class="box-container">

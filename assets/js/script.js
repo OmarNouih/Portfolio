@@ -66,15 +66,13 @@ document.addEventListener('visibilitychange',
     });
 
 
-// <!-- typed js effect starts -->
 var typed = new Typed(".typing-text", {
-    strings: ["AI and Data Science Expert", "Machine Learning Engineer", "Full Stack Web Developer", "Chatbot Solutions Developer", "Software Development Specialist"],
+    strings: ["ML & LLM DEVELOPER","AI & DATA SCIENCE ENGINEER","BIG DATA & REAL‑TIME PIPELINES","CHATBOT & RAG SOLUTIONS BUILDER","DATA VIZ & BI DASHBOARDS"],
     loop: true,
     typeSpeed: 50,
     backSpeed: 25,
     backDelay: 500,
 });
-// <!-- typed js effect ends -->
 
 async function fetchData(type = "skills") {
     let response
@@ -226,3 +224,24 @@ srtop.reveal('.experience .timeline .container', { interval: 400 });
 
 srtop.reveal('.contact .container', { delay: 400 });
 srtop.reveal('.contact .container .form-group', { delay: 400 });
+
+(function(){
+  const headings = document.querySelectorAll('section .heading');
+  if(!headings.length) return;
+
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(ent=>{
+      if(ent.isIntersecting){
+        ent.target.classList.add('is-visible');
+        // Once revealed, stop observing for performance
+        obs.unobserve(ent.target);
+      }
+    });
+  },{
+    root:null,
+    threshold:.4,    // reveal when ~40% visible
+    rootMargin:"0px 0px -20% 0px" // earlier reveal
+  });
+
+  headings.forEach(h=>obs.observe(h));
+})();

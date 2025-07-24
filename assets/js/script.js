@@ -34,7 +34,7 @@ $(document).ready(function () {
         }, 500, 'linear')
     });
 
-    // Contact form submission
+   
     $("#contact-form").submit(function (event) {
         event.preventDefault(); 
 
@@ -52,84 +52,55 @@ $(document).ready(function () {
     });
 });
 
-// Page visibility change for title
-document.addEventListener('visibilitychange', function () {
-    if (document.visibilityState === "visible") {
-        document.title = "Portfolio | NOUIH Omar";
-        $("#favicon").attr("href", "assets/images/favicon.png");
-    } else {
-        document.title = "Come Back To Portfolio";
-        $("#favicon").attr("href", "assets/images/favhand.png");
-    }
+
+document.addEventListener('visibilitychange',
+    function () {
+        if (document.visibilityState === "visible") {
+            document.title = "Portfolio | NOUIH Omar";
+            $("#favicon").attr("href", "assets/images/favicon.png");
+        }
+        else {
+            document.title = "Come Back To Portfolio";
+            $("#favicon").attr("href", "assets/images/favhand.png");
+        }
+    });
+
+
+var typed = new Typed(".typing-text", {
+    strings: ["ML & LLM DEVELOPER","AI & DATA SCIENCE ENGINEER","BIG DATA & REAL‑TIME PIPELINES","CHATBOT & RAG SOLUTIONS BUILDER","DATA VIZ & BI DASHBOARDS"],
+    loop: true,
+    typeSpeed: 50,
+    backSpeed: 25,
+    backDelay: 500,
 });
 
-// Fixed Typed.js initialization
-// Fetch data function with error handling
 async function fetchData(type = "skills") {
-    try {
-        let response;
-        if (type === "skills") {
-            response = await fetch("skills.json");
-        } else {
-            response = await fetch("./projects/projects.json");
-        }
-        
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        // Return fallback data if fetch fails
-        if (type === "skills") {
-            return [
-                {name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"},
-                {name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"},
-                {name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"}
-            ];
-        } else {
-            return [
-                {
-                    name: "Sample Project",
-                    desc: "This is a sample project",
-                    image: "default",
-                    category: "web",
-                    links: {view: "#", code: "#"}
-                }
-            ];
-        }
-    }
+    let response
+    type === "skills" ?
+        response = await fetch("skills.json")
+        :
+        response = await fetch("./projects/projects.json")
+    const data = await response.json();
+    return data;
 }
 
 function showSkills(skills) {
     let skillsContainer = document.getElementById("skillsContainer");
-    if (!skillsContainer) {
-        console.error("Skills container not found");
-        return;
-    }
-    
     let skillHTML = "";
     skills.forEach(skill => {
         skillHTML += `
         <div class="bar">
               <div class="info">
-                <img src="${skill.icon}" alt="skill" />
+                <img src=${skill.icon} alt="skill" />
                 <span>${skill.name}</span>
               </div>
-            </div>`;
+            </div>`
     });
     skillsContainer.innerHTML = skillHTML;
 }
 
 function showProjects(projects) {
     let projectsContainer = document.querySelector("#work .box-container");
-    if (!projectsContainer) {
-        console.error("Projects container not found");
-        return;
-    }
-    
     let projectHTML = "";
     projects.slice(0, 10).filter(project => project.category != "android").forEach(project => {
         projectHTML += `
@@ -147,30 +118,29 @@ function showProjects(projects) {
           </div>
         </div>
       </div>
-    </div>`;
+    </div>`
     });
     projectsContainer.innerHTML = projectHTML;
 
-    // Initialize tilt effect if VanillaTilt is available
-    if (typeof VanillaTilt !== 'undefined') {
-        VanillaTilt.init(document.querySelectorAll(".tilt"), {
-            max: 15,
-        });
-    }
+    // <!-- tilt js effect starts -->
+    VanillaTilt.init(document.querySelectorAll(".tilt"), {
+        max: 15,
+    });
+    // <!-- tilt js effect ends -->
 
-    // Initialize ScrollReveal if available
-    if (typeof ScrollReveal !== 'undefined') {
-        const srtop = ScrollReveal({
-            origin: 'top',
-            distance: '80px',
-            duration: 1000,
-            reset: true
-        });
-        srtop.reveal('.work .box', { interval: 200 });
-    }
+    /* ===== SCROLL REVEAL ANIMATION ===== */
+    const srtop = ScrollReveal({
+        origin: 'top',
+        distance: '80px',
+        duration: 1000,
+        reset: true
+    });
+
+    /* SCROLL PROJECTS */
+    srtop.reveal('.work .box', { interval: 200 });
+
 }
 
-// Load skills and projects
 fetchData().then(data => {
     showSkills(data);
 });
@@ -179,14 +149,24 @@ fetchData("projects").then(data => {
     showProjects(data);
 });
 
-// Initialize tilt effect
-if (typeof VanillaTilt !== 'undefined') {
-    VanillaTilt.init(document.querySelectorAll(".tilt"), {
-        max: 15,
-    });
-}
+// <!-- tilt js effect starts -->
+VanillaTilt.init(document.querySelectorAll(".tilt"), {
+    max: 15,
+});
+// <!-- tilt js effect ends -->
 
-// Disable developer mode
+
+// pre loader start
+// function loader() {
+//     document.querySelector('.loader-container').classList.add('fade-out');
+// }
+// function fadeOut() {
+//     setInterval(loader, 500);
+// }
+// window.onload = fadeOut;
+// pre loader end
+
+// disable developer mode
 document.onkeydown = function (e) {
     if (e.keyCode == 123) {
         return false;
@@ -205,61 +185,63 @@ document.onkeydown = function (e) {
     }
 }
 
-// ScrollReveal animations
-if (typeof ScrollReveal !== 'undefined') {
-    const srtop = ScrollReveal({
-        origin: 'top',
-        distance: '80px',
-        duration: 1000,
-        reset: true
-    });
 
-    srtop.reveal('.home .content h3', { delay: 200 });
-    srtop.reveal('.home .content p', { delay: 200 });
-    srtop.reveal('.home .content .btn', { delay: 200 });
+const srtop = ScrollReveal({
+    origin: 'top',
+    distance: '80px',
+    duration: 1000,
+    reset: true
+});
 
-    srtop.reveal('.home .image', { delay: 400 });
-    srtop.reveal('.home .linkedin', { interval: 600 });
-    srtop.reveal('.home .github', { interval: 800 });
-    srtop.reveal('.home .twitter', { interval: 1000 });
-    srtop.reveal('.home .telegram', { interval: 600 });
-    srtop.reveal('.home .instagram', { interval: 600 });
-    srtop.reveal('.home .dev', { interval: 600 });
+srtop.reveal('.home .content h3', { delay: 200 });
+srtop.reveal('.home .content p', { delay: 200 });
+srtop.reveal('.home .content .btn', { delay: 200 });
 
-    srtop.reveal('.about .content h3', { delay: 200 });
-    srtop.reveal('.about .content .tag', { delay: 200 });
-    srtop.reveal('.about .content p', { delay: 200 });
-    srtop.reveal('.about .content .box-container', { delay: 200 });
-    srtop.reveal('.about .content .resumebtn', { delay: 200 });
+srtop.reveal('.home .image', { delay: 400 });
+srtop.reveal('.home .linkedin', { interval: 600 });
+srtop.reveal('.home .github', { interval: 800 });
+srtop.reveal('.home .twitter', { interval: 1000 });
+srtop.reveal('.home .telegram', { interval: 600 });
+srtop.reveal('.home .instagram', { interval: 600 });
+srtop.reveal('.home .dev', { interval: 600 });
 
-    srtop.reveal('.skills .container', { interval: 200 });
-    srtop.reveal('.skills .container .bar', { delay: 400 });
+srtop.reveal('.about .content h3', { delay: 200 });
+srtop.reveal('.about .content .tag', { delay: 200 });
+srtop.reveal('.about .content p', { delay: 200 });
+srtop.reveal('.about .content .box-container', { delay: 200 });
+srtop.reveal('.about .content .resumebtn', { delay: 200 });
 
-    srtop.reveal('.education .box', { interval: 200 });
-    srtop.reveal('.work .box', { interval: 200 });
-    srtop.reveal('.experience .timeline', { delay: 400 });
-    srtop.reveal('.experience .timeline .container', { interval: 400 });
-    srtop.reveal('.contact .container', { delay: 400 });
-    srtop.reveal('.contact .container .form-group', { delay: 400 });
-}
 
-// Intersection Observer for headings
+srtop.reveal('.skills .container', { interval: 200 });
+srtop.reveal('.skills .container .bar', { delay: 400 });
+
+srtop.reveal('.education .box', { interval: 200 });
+
+srtop.reveal('.work .box', { interval: 200 });
+
+srtop.reveal('.experience .timeline', { delay: 400 });
+srtop.reveal('.experience .timeline .container', { interval: 400 });
+
+srtop.reveal('.contact .container', { delay: 400 });
+srtop.reveal('.contact .container .form-group', { delay: 400 });
+
 (function(){
-    const headings = document.querySelectorAll('section .heading');
-    if(!headings.length) return;
+  const headings = document.querySelectorAll('section .heading');
+  if(!headings.length) return;
 
-    const obs = new IntersectionObserver((entries)=>{
-        entries.forEach(ent=>{
-            if(ent.isIntersecting){
-                ent.target.classList.add('is-visible');
-                obs.unobserve(ent.target);
-            }
-        });
-    },{
-        root:null,
-        threshold:.4,
-        rootMargin:"0px 0px -20% 0px"
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(ent=>{
+      if(ent.isIntersecting){
+        ent.target.classList.add('is-visible');
+        // Once revealed, stop observing for performance
+        obs.unobserve(ent.target);
+      }
     });
+  },{
+    root:null,
+    threshold:.4,    // reveal when ~40% visible
+    rootMargin:"0px 0px -20% 0px" // earlier reveal
+  });
 
-    headings.forEach(h=>obs.observe(h));
+  headings.forEach(h=>obs.observe(h));
 })();

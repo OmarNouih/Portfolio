@@ -432,26 +432,134 @@
   .reveal.in { opacity: 1; transform: none; }
 
   /* ─── RESPONSIVE ─── */
+
+  /* Tablet */
   @media(max-width:960px) {
-    #home { grid-template-columns: 1fr; text-align: center; padding-top: 96px; }
-    .hero-text { order: 2; } .hero-visual { order: 1; }
-    .hero-bio { margin: 0 auto 36px; }
+    section { padding: 72px 6%; }
+    #home { grid-template-columns: 1fr; text-align: center; padding-top: 90px; gap: 36px; }
+    .hero-text { order: 2; }
+    .hero-visual { order: 1; }
+    .hero-bio { margin: 0 auto 32px; }
     .hero-actions { justify-content: center; }
     .hero-socials { justify-content: center; }
-    .hero-kpis { max-width: 400px; margin: 44px auto 0; }
+    .hero-kpis { max-width: 420px; margin: 36px auto 0; }
     .hero-chips { margin: 0 auto; }
+    .avatar-wrap { width: 220px; height: 220px; }
+    .avatar-img { width: 220px; height: 220px; }
     .exp-card-inner { grid-template-columns: 1fr; }
     .exp-left { border-right: none; border-bottom: 1px solid var(--border); }
-    #about { grid-template-columns: 1fr; gap: 40px; }
-    .about-portrait-col { position: static; }
-    .about-portrait-frame img { height: 340px; object-position: center 5%; }
-    .skills-grid { grid-template-columns: 1fr; }
+    #about { grid-template-columns: 1fr; gap: 36px; }
+    .about-portrait-col { position: static; order: -1; }
+    .about-portrait-frame img { height: 300px; object-position: center 8%; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
     .proj-featured { grid-template-columns: 1fr; }
     .pf-left { border-right: none; border-bottom: 1px solid var(--border); }
-    .edu-grid, .cert-grid, .contact-wrap, .form-row2 { grid-template-columns: 1fr; }
-    nav { display: none; flex-direction: column; position: fixed; top: 64px; left: 0; right: 0; background: rgba(6,10,18,.97); padding: 20px 5%; border-bottom: 1px solid var(--border); z-index: 199; }
+    .edu-grid { grid-template-columns: 1fr; }
+    .cert-grid { grid-template-columns: 1fr; }
+    .contact-wrap { grid-template-columns: 1fr; gap: 36px; }
+    .form-row2 { grid-template-columns: 1fr 1fr; }
+    nav { display: none; flex-direction: column; position: fixed; top: 64px; left: 0; right: 0; background: rgba(6,10,18,.98); padding: 20px 5%; border-bottom: 1px solid var(--border); z-index: 199; gap: 4px; }
     nav.open { display: flex; }
     #menu-btn { display: block; }
+  }
+
+  /* Phone */
+  @media(max-width:600px) {
+    :root { --r: 10px; --r2: 14px; }
+    section { padding: 60px 5%; }
+    header { padding: 0 5%; }
+
+    /* Hero */
+    #home { padding: 80px 5% 60px; gap: 28px; }
+    .hero-name { font-size: 2.6rem; }
+    .hero-role { font-size: .85rem; }
+    .hero-bio { font-size: .88rem; }
+    .hero-eyebrow { font-size: .65rem; }
+    .hero-actions { flex-direction: column; align-items: center; gap: 10px; }
+    .hero-actions a { width: 100%; justify-content: center; }
+    .hero-kpis { flex-wrap: wrap; }
+    .hero-kpi { flex: 1 1 40%; border-right: none; border-bottom: 1px solid var(--border); padding: 14px 10px; }
+    .hero-kpi:nth-child(odd) { border-right: 1px solid var(--border); }
+    .hero-kpi:nth-last-child(-n+2) { border-bottom: none; }
+    .hero-kpi-val { font-size: 1.3rem; }
+    .avatar-wrap { width: 190px; height: 190px; }
+    .avatar-img { width: 190px; height: 190px; }
+    .hero-chips { gap: 6px; }
+    .chip { font-size: .62rem; padding: 5px 10px; }
+    .chip strong { font-size: .78rem; }
+
+    /* Section titles */
+    .sec-title { font-size: 1.7rem; margin-bottom: 32px; }
+
+    /* Experience carousel */
+    .exp-nav-bar { flex-direction: row; gap: 8px; }
+    .exp-counter { font-size: .65rem; }
+    .exp-card-inner { grid-template-columns: 1fr; min-height: unset; }
+    .exp-left { padding: 22px 20px; gap: 14px; }
+    .exp-metrics-side { flex-direction: row; gap: 8px; margin-top: 0; }
+    .esm { flex: 1; padding: 10px 8px; }
+    .esm-v { font-size: 1.1rem; }
+    .esm-l { font-size: .52rem; }
+    .exp-right { padding: 22px 20px; gap: 16px; overflow-y: visible; }
+    .exp-role { font-size: .95rem; }
+    .exp-points li { font-size: .82rem; }
+    .exp-summary-box { font-size: .84rem; padding: 12px 14px; }
+
+    /* About */
+    .about-portrait-frame img { height: 260px; }
+    .about-card { padding: 20px; }
+    .about-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .about-item { padding: 11px 14px; }
+    .about-item .val { font-size: .82rem; }
+    .lang-row { gap: 7px; }
+    .lang-badge { font-size: .75rem; padding: 7px 11px; }
+    .principle-card { padding: 14px 16px; }
+
+    /* Skills */
+    .skills-grid { grid-template-columns: 1fr; gap: 12px; }
+    .skill-card { padding: 18px; }
+    .pill { font-size: .75rem; padding: 4px 10px; }
+
+    /* Projects */
+    .pf-left, .pf-right { padding: 22px 20px; }
+    .proj-title { font-size: 1.1rem; }
+    .proj-desc { font-size: .82rem; }
+    .proj-links-row { flex-direction: column; gap: 8px; }
+    .pl { justify-content: center; }
+    .proj-cards { grid-template-columns: 1fr; gap: 12px; }
+    .proj-card { padding: 18px; }
+    .feat-metrics { grid-template-columns: repeat(3,1fr); }
+    .fm-v { font-size: 1rem; }
+
+    /* Education */
+    .edu-grid { gap: 14px; }
+    .edu-body { padding: 20px; }
+    .edu-deg { font-size: .95rem; }
+
+    /* Certifications */
+    .cert-grid { gap: 12px; }
+    .cert-card { padding: 18px; gap: 14px; }
+    .cert-name { font-size: .85rem; }
+    .cert-icon-img { width: 54px; height: 54px; }
+
+    /* Contact */
+    .contact-wrap { gap: 28px; }
+    .form-row2 { grid-template-columns: 1fr; }
+    .soc-row { gap: 7px; }
+    .soc-btn { font-size: .72rem; padding: 10px 6px; }
+
+    /* Footer */
+    footer { flex-direction: column; text-align: center; gap: 6px; padding: 20px 5%; }
+  }
+
+  /* Very small phones */
+  @media(max-width:380px) {
+    .hero-name { font-size: 2.1rem; }
+    .avatar-wrap { width: 160px; height: 160px; }
+    .avatar-img { width: 160px; height: 160px; }
+    .about-grid { grid-template-columns: 1fr; }
+    .hero-kpi { flex: 1 1 100%; border-right: none; }
+    .hero-kpi:nth-child(odd) { border-right: none; }
   }
   </style>
 </head>
@@ -490,13 +598,13 @@
       <a href="https://www.linkedin.com/in/omarnouih/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
       <a href="https://github.com/omarnouih" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
       <a href="https://twitter.com/omar_nouih" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-      <a href="mailto:omarnouih@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      <a href="/cdn-cgi/l/email-protection#1a75777b6874756f73725a7d777b737634797577" aria-label="Email"><i class="fas fa-envelope"></i></a>
       <a href="https://t.me/omar_nouih" target="_blank" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
     </div>
     <div class="hero-kpis">
       <div class="hero-kpi"><div class="hero-kpi-val">4+</div><div class="hero-kpi-lbl">Experiences</div></div>
       <div class="hero-kpi"><div class="hero-kpi-val">7+</div><div class="hero-kpi-lbl">Projects</div></div>
-      <div class="hero-kpi"><div class="hero-kpi-val">2K+</div><div class="hero-kpi-lbl">Users Served</div></div>
+      <div class="hero-kpi"><div class="hero-kpi-val">100+</div><div class="hero-kpi-lbl">Users Served</div></div>
       <div class="hero-kpi"><div class="hero-kpi-val">95%</div><div class="hero-kpi-lbl">SQL Accuracy</div></div>
     </div>
   </div>
@@ -513,7 +621,7 @@
     <!-- Chips neatly below photo, not overlapping -->
     <div class="hero-chips">
       <div class="chip"><strong>95%</strong>&nbsp;SQL Accuracy</div>
-      <div class="chip"><strong>2K+</strong>&nbsp;Users Served</div>
+      <div class="chip"><strong>100+</strong>&nbsp;Users Served</div>
       <div class="chip"><i class="fas fa-brain" style="color:var(--accent2)"></i>GPT-4o · LangChain</div>
       <div class="chip"><i class="fas fa-stream" style="color:var(--green)"></i>Real-time Pipelines</div>
     </div>
@@ -771,13 +879,13 @@
               </div>
               <div class="exp-metrics-side">
                 <div class="esm"><div class="esm-v">92%</div><div class="esm-l">Intent Accuracy</div></div>
-                <div class="esm"><div class="esm-v">2000+</div><div class="esm-l">Active Users</div></div>
+                <div class="esm"><div class="esm-v">100+</div><div class="esm-l">Active Users</div></div>
                 <div class="esm"><div class="esm-v">75%</div><div class="esm-l">HR Tickets Reduced</div></div>
               </div>
             </div>
             <div class="exp-right">
               <div class="exp-summary-box">
-                Developed and deployed an intelligent HR virtual assistant for Royal Air Maroc, automating employee requests for leave balances, payslips, and work certificates — serving 2,000+ staff members directly on WhatsApp.
+                Developed and deployed an intelligent HR virtual assistant for Royal Air Maroc, automating employee requests for leave balances, payslips, and work certificates — serving 100+ staff members directly on WhatsApp.
               </div>
               <div>
                 <div class="exp-section-title">Key Achievements</div>
@@ -787,7 +895,7 @@
                   <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Deployed to <strong>WhatsApp Business via Twilio</strong>, providing 24/7 automated HR support and reducing manual HR ticket volume by <strong>75%</strong> within the first month post-launch.</span></li>
                   <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Implemented <strong>multi-language support</strong> (French and Arabic) within the dialogue manager, allowing seamless switching based on user language preference during conversations.</span></li>
                   <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Built a <strong>conversation analytics dashboard</strong> (Python + Matplotlib) tracking intent distribution, user satisfaction scores, and knowledge gap identification — fueling continuous NLU model improvement.</span></li>
-                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Used <strong>Redis</strong> for session state management, ensuring fast context retrieval across multi-turn conversations for 2,000+ concurrent employee sessions.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Used <strong>Redis</strong> for session state management, ensuring fast context retrieval across multi-turn conversations for 100+ concurrent employee sessions.</span></li>
                 </ul>
               </div>
               <div>
@@ -816,7 +924,7 @@
     <div class="about-card"><p>Oriented toward real impact, I specialize in building <strong>LLM-powered business assistants</strong>, real-time data pipelines, and BI systems that transform complex data into actionable operational value. I thrive at the intersection of AI research and production engineering.</p></div>
     <div class="about-grid">
       <div class="about-item"><div class="lbl">Location</div><div class="val">Casablanca, Morocco</div></div>
-      <div class="about-item"><div class="lbl">Email</div><div class="val">omarnouih@gmail.com</div></div>
+      <div class="about-item"><div class="lbl">Email</div><div class="val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="204f4d41524e4f55494860474d41494c0e434f4d">[email&#160;protected]</a></div></div>
       <div class="about-item"><div class="lbl">Phone</div><div class="val">+212 709-725-235</div></div>
       <div class="about-item"><div class="lbl">Status</div><div class="val" style="color:var(--green)">Open to Opportunities</div></div>
     </div>
@@ -836,7 +944,7 @@
       </div>
       <div class="principle-card" style="margin-bottom:0">
         <div class="p-icon" style="background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);color:var(--green)"><i class="fas fa-users"></i></div>
-        <div><div style="font-weight:700;font-size:.92rem;color:var(--text);margin-bottom:4px">User-Centric Design</div><div style="font-size:.84rem;color:var(--sub)">Complex AI systems should feel simple. Whether it's a chatbot for 2,000+ employees or a BI dashboard, usability comes first.</div></div>
+        <div><div style="font-weight:700;font-size:.92rem;color:var(--text);margin-bottom:4px">User-Centric Design</div><div style="font-size:.84rem;color:var(--sub)">Complex AI systems should feel simple. Whether it's a chatbot for 100+ employees or a BI dashboard, usability comes first.</div></div>
       </div>
     </div>
   </div>
@@ -920,7 +1028,7 @@
       <div class="proj-card reveal" style="transition-delay:.08s">
         <div class="pc-top"><div class="pc-icon" style="color:var(--accent2)"><i class="fas fa-headset"></i></div><div class="pc-links"><a href="https://github.com/omarnouih" target="_blank"><i class="fab fa-github"></i></a></div></div>
         <div class="pc-name">HR Chatbot (Royal Air Maroc)</div>
-        <div class="pc-desc">Rasa NLU + SpaCy HR assistant handling leaves, payslips and certificates for 2000+ employees. Deployed on WhatsApp via Twilio. 92% accuracy, 75% ticket reduction.</div>
+        <div class="pc-desc">Rasa NLU + SpaCy HR assistant handling leaves, payslips and certificates for 100+ employees. Deployed on WhatsApp via Twilio. 92% accuracy, 75% ticket reduction.</div>
         <div class="pc-tags"><span class="ptag">Rasa</span><span class="ptag">SpaCy</span><span class="ptag">Twilio</span><span class="ptag">Flask</span></div>
       </div>
       <div class="proj-card reveal" style="transition-delay:.14s">
@@ -1040,7 +1148,7 @@
     <div class="reveal">
       <p style="color:var(--sub);font-size:.92rem;line-height:1.85;margin-bottom:24px">I'm currently open to new opportunities — full-time roles, freelance projects, or technical collaborations. Send me a message and I'll get back to you quickly.</p>
       <div class="contact-cards">
-        <a href="mailto:omarnouih@gmail.com" class="contact-card"><div class="cc-icon"><i class="fas fa-envelope"></i></div><div><div class="cc-lbl">Email</div><div class="cc-val">omarnouih@gmail.com</div></div></a>
+        <a href="/cdn-cgi/l/email-protection#95faf8f4e7fbfae0fcfdd5f2f8f4fcf9bbf6faf8" class="contact-card"><div class="cc-icon"><i class="fas fa-envelope"></i></div><div><div class="cc-lbl">Email</div><div class="cc-val"><span class="__cf_email__" data-cfemail="751a1814071b1a001c1d351218141c195b161a18">[email&#160;protected]</span></div></div></a>
         <a href="tel:+212709725235" class="contact-card"><div class="cc-icon"><i class="fas fa-phone"></i></div><div><div class="cc-lbl">Phone</div><div class="cc-val">+212 709-725-235</div></div></a>
         <div class="contact-card" style="cursor:default"><div class="cc-icon"><i class="fas fa-map-marker-alt"></i></div><div><div class="cc-lbl">Location</div><div class="cc-val">Casablanca, Morocco</div></div></div>
       </div>
@@ -1072,7 +1180,7 @@
 
 <a href="#home" id="back-top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></a>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   /* ── Header + back to top ── */
   const hdr = document.getElementById('hdr');
   const bt = document.getElementById('back-top');
@@ -1212,7 +1320,7 @@
         }
       }).catch(function() {
         status.style.display = 'block';
-        status.style.background = 'rgba(248,113,113,.1)';
+        status.        status.style.background = 'rgba(248,113,113,.1)';
         status.style.border = '1px solid rgba(248,113,113,.3)';
         status.style.color = '#f87171';
         status.textContent = 'Something went wrong. Please email me directly at omarnouih@gmail.com';

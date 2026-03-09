@@ -1,878 +1,1227 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="jigar sable, portfolio, jigar, full stack dev, personal portfolio lifecodes, portfolio design, portfolio website, personal portfolio" />
-    <meta name="description" content="Welcome to Omar's Portfolio." />
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link id='favicon' rel="shortcut icon" href="./assets/images/favicon.png" type="image/x-png">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <title>Portfolio | NOUIH Omar</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Omar Nouih | AI & Data Engineer | Morocco</title>
+  <meta name="description" content="Omar Nouih is an AI & Data Engineer based in Casablanca, Morocco. Master's in AI & Data Science. Specializing in LLMs, RAG, NLP, real-time data pipelines and BI systems.">
+  <meta name="keywords" content="Omar Nouih, AI Engineer, Data Scientist, Machine Learning, LLM, RAG, LangChain, NLP, Morocco, Casablanca, Python, Power BI, Data Engineer">
+  <meta name="author" content="Omar Nouih">
+  <link rel="canonical" href="https://omarnouih.github.io/Portfolio">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #060a12; --surface: #0c1220; --card: #0e1525; --card2: #111a2e;
+    --border: rgba(56,189,248,.1); --border2: rgba(56,189,248,.22);
+    --accent: #38bdf8; --accent2: #818cf8; --green: #34d399; --gold: #fbbf24;
+    --text: #e2eaf5; --sub: #94a3b8; --muted: #4a6380;
+    --sans: 'Outfit', sans-serif; --mono: 'JetBrains Mono', monospace;
+    --r: 12px; --r2: 18px;
+    --glow: 0 0 40px rgba(56,189,248,.12); --glow2: 0 0 40px rgba(129,140,248,.12);
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 15px; line-height: 1.7; overflow-x: hidden; }
+  .grid-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; background-image: linear-gradient(rgba(56,189,248,.025) 1px,transparent 1px), linear-gradient(90deg,rgba(56,189,248,.025) 1px,transparent 1px); background-size: 64px 64px; }
+  ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: var(--bg); } ::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 2px; }
+
+  /* ─── HEADER ─── */
+  header { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 0 5%; height: 64px; background: rgba(6,10,18,.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); transition: box-shadow .3s; }
+  header.scrolled { box-shadow: 0 4px 32px rgba(0,0,0,.5); }
+  .logo { font-family: var(--sans); font-weight: 800; font-size: 1.05rem; color: var(--text); text-decoration: none; }
+  .logo span { color: var(--accent); }
+  nav { display: flex; align-items: center; gap: 2px; }
+  nav a { font-family: var(--sans); font-size: .82rem; font-weight: 500; color: var(--sub); text-decoration: none; padding: 6px 14px; border-radius: 8px; transition: all .2s; }
+  nav a:hover { color: var(--text); background: rgba(255,255,255,.05); }
+  nav a.active { color: var(--accent); }
+  .nav-hire { margin-left: 8px; font-size: .8rem !important; font-weight: 600 !important; color: var(--bg) !important; background: linear-gradient(135deg,var(--accent),#0ea5e9) !important; border-radius: 8px !important; padding: 7px 18px !important; }
+  #menu-btn { display: none; background: none; border: none; color: var(--accent); font-size: 1.2rem; cursor: pointer; }
+
+  /* ─── BLOBS ─── */
+  .blob { position: fixed; border-radius: 50%; pointer-events: none; filter: blur(90px); opacity: .3; }
+  .blob-1 { width: 500px; height: 500px; background: rgba(56,189,248,.14); top: -80px; right: 80px; animation: blobDrift 9s ease-in-out infinite; }
+  .blob-2 { width: 420px; height: 420px; background: rgba(129,140,248,.1); bottom: -60px; left: -60px; animation: blobDrift 13s ease-in-out infinite reverse; }
+  @keyframes blobDrift { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(20px,-22px) scale(1.07); } }
+
+  /* ─── HERO ─── */
+  #home {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    align-items: center;
+    gap: 80px;
+    padding: 100px 8% 80px;
+    position: relative; z-index: 1;
+  }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); background: rgba(56,189,248,.07); border: 1px solid rgba(56,189,248,.18); border-radius: 100px; padding: 5px 16px; margin-bottom: 22px; }
+  .dot-green { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); animation: dotPulse 2s ease-in-out infinite; }
+  @keyframes dotPulse { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+  .hero-name { font-family: var(--sans); font-size: clamp(2.8rem,5.5vw,5.2rem); font-weight: 900; line-height: 1.02; letter-spacing: -.03em; margin-bottom: 16px; }
+  .hero-name .grad { background: linear-gradient(135deg,var(--accent) 0%,var(--accent2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero-role { font-family: var(--mono); font-size: .95rem; color: var(--sub); margin-bottom: 22px; min-height: 1.5em; }
+  .cursor { display: inline-block; width: 2px; height: .9em; background: var(--accent); margin-left: 2px; animation: blink 1s step-end infinite; vertical-align: middle; }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+  .hero-bio { font-size: .95rem; color: var(--sub); max-width: 520px; line-height: 1.85; margin-bottom: 36px; }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+  .btn-solid { display: inline-flex; align-items: center; gap: 8px; font-family: var(--sans); font-size: .85rem; font-weight: 600; color: #fff; background: linear-gradient(135deg,var(--accent),#0ea5e9); border: none; border-radius: 10px; padding: 12px 26px; cursor: pointer; text-decoration: none; box-shadow: 0 4px 18px rgba(56,189,248,.28); transition: all .25s; }
+  .btn-solid:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(56,189,248,.38); }
+  .btn-ghost { display: inline-flex; align-items: center; gap: 8px; font-family: var(--sans); font-size: .85rem; font-weight: 500; color: var(--text); background: transparent; border: 1px solid var(--border2); border-radius: 10px; padding: 11px 24px; cursor: pointer; text-decoration: none; transition: all .25s; }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.06); }
+  .hero-socials { display: flex; gap: 10px; }
+  .hero-socials a { width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid var(--border); border-radius: 10px; color: var(--sub); text-decoration: none; font-size: .9rem; transition: all .2s; }
+  .hero-socials a:hover { color: var(--accent); border-color: var(--accent); background: rgba(56,189,248,.07); transform: translateY(-2px); }
+  .hero-kpis { display: flex; margin-top: 44px; background: var(--card); border: 1px solid var(--border); border-radius: var(--r2); overflow: hidden; }
+  .hero-kpi { flex: 1; padding: 18px 16px; text-align: center; border-right: 1px solid var(--border); }
+  .hero-kpi:last-child { border-right: none; }
+  .hero-kpi-val { font-family: var(--sans); font-size: 1.5rem; font-weight: 800; color: var(--accent); line-height: 1; }
+  .hero-kpi-lbl { font-family: var(--mono); font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-top: 5px; }
+
+  /* ─── HERO VISUAL (no floating chips overlapping photo) ─── */
+  .hero-visual {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; align-items: center; gap: 20px;
+  }
+  .avatar-wrap {
+    position: relative;
+    width: 300px; height: 300px;
+  }
+  .ring-outer { position: absolute; inset: -18px; border-radius: 50%; border: 1px solid rgba(56,189,248,.18); animation: spin 18s linear infinite; }
+  .ring-inner { position: absolute; inset: -9px; border-radius: 50%; border: 1px dashed rgba(129,140,248,.22); animation: spin 12s linear infinite reverse; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .avatar-img { width: 300px; height: 300px; border-radius: 50%; object-fit: cover; object-position: top center; border: 3px solid rgba(56,189,248,.28); box-shadow: 0 0 60px rgba(56,189,248,.2), 0 0 120px rgba(129,140,248,.1); display: block; background: var(--card); }
+  .avatar-upload-label { position: absolute; inset: 0; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; cursor: pointer; background: rgba(6,10,18,.75); opacity: 0; transition: opacity .25s; font-size: .78rem; font-weight: 600; color: var(--accent); font-family: var(--sans); }
+  .avatar-wrap:hover .avatar-upload-label { opacity: 1; }
+  #avatar-input { display: none; }
+  .status-badge { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: .72rem; letter-spacing: .1em; color: var(--green); background: rgba(52,211,153,.07); border: 1px solid rgba(52,211,153,.2); border-radius: 100px; padding: 7px 18px; }
+
+  /* chips BELOW the photo, not overlapping */
+  .hero-chips {
+    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; max-width: 320px;
+  }
+  .chip { display: inline-flex; align-items: center; gap: 7px; background: var(--card2); border: 1px solid var(--border2); border-radius: 10px; padding: 7px 14px; font-family: var(--mono); font-size: .68rem; color: var(--accent); white-space: nowrap; }
+  .chip strong { font-family: var(--sans); font-size: .88rem; font-weight: 800; color: var(--text); }
+
+  /* ─── SECTION SHARED ─── */
+  section { padding: 96px 8%; position: relative; z-index: 1; }
+  .sec-eyebrow { font-family: var(--mono); font-size: .7rem; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .sec-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
+  .sec-title { font-family: var(--sans); font-size: clamp(1.9rem,3.5vw,2.8rem); font-weight: 800; letter-spacing: -.025em; line-height: 1.1; margin-bottom: 52px; }
+  .sec-title .hi { color: var(--accent); }
+  .sec-title .gr { background: linear-gradient(135deg,var(--accent2),#c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .div { height: 1px; background: linear-gradient(90deg,transparent,var(--border2),transparent); }
+
+  /* ─── EXPERIENCE: ONE CARD PER VIEW ─── */
+  .exp-carousel-outer {
+    position: relative;
+  }
+  .exp-nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .exp-dots {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .exp-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    border: 1px solid var(--border2);
+    background: transparent;
+    cursor: pointer;
+    transition: all .2s;
+    padding: 0;
+  }
+  .exp-dot.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    width: 24px;
+    border-radius: 4px;
+  }
+  .exp-arrows {
+    display: flex;
+    gap: 8px;
+  }
+  .exp-arrow {
+    width: 38px; height: 38px;
+    display: grid; place-items: center;
+    background: var(--card);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    color: var(--accent);
+    cursor: pointer;
+    transition: all .2s;
+    font-size: .8rem;
+  }
+  .exp-arrow:hover { background: rgba(56,189,248,.1); }
+  .exp-arrow:disabled { opacity: .3; cursor: default; }
+  .exp-counter {
+    font-family: var(--mono);
+    font-size: .72rem;
+    color: var(--muted);
+  }
+
+  .exp-track-wrapper {
+    overflow: hidden;
+    border-radius: var(--r2);
+    width: 100%;
+  }
+  .exp-track {
+    display: flex;
+    width: 100%;
+    transition: transform .5s cubic-bezier(.4,0,.2,1);
+    will-change: transform;
+  }
+  .exp-card {
+    width: 100%;
+    flex: 0 0 100%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    overflow: hidden;
+  }
+
+  .exp-card-inner {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    min-height: 520px;
+  }
+
+  /* left panel */
+  .exp-left {
+    background: linear-gradient(180deg, rgba(56,189,248,.05) 0%, rgba(129,140,248,.04) 100%);
+    border-right: 1px solid var(--border);
+    padding: 36px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .exp-logo {
+    width: 60px; height: 60px;
+    border-radius: 14px;
+    border: 1px solid var(--border2);
+    background: rgba(56,189,248,.07);
+    display: grid; place-items: center;
+    font-family: var(--sans); font-size: .85rem; font-weight: 800; color: var(--accent);
+    overflow: hidden;
+  }
+  .exp-logo img { width: 100%; height: 100%; object-fit: contain; border-radius: 12px; }
+  .exp-role { font-size: 1.1rem; font-weight: 800; color: var(--text); line-height: 1.3; margin-bottom: 5px; }
+  .exp-company { font-family: var(--mono); font-size: .8rem; color: var(--accent); margin-bottom: 14px; display: flex; align-items: center; gap: 5px; text-decoration: none; }
+  .exp-company:hover { opacity: .75; }
+  .badge { font-family: var(--mono); font-size: .63rem; letter-spacing: .08em; border-radius: 6px; padding: 4px 10px; display: inline-flex; align-items: center; gap: 5px; }
+  .b-type { color: var(--accent2); background: rgba(129,140,248,.1); border: 1px solid rgba(129,140,248,.2); }
+  .b-date { color: var(--sub); background: rgba(148,163,184,.07); border: 1px solid rgba(148,163,184,.12); }
+  .b-now { color: var(--green); background: rgba(52,211,153,.07); border: 1px solid rgba(52,211,153,.18); }
+  .b-now .bdot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); animation: dotPulse 2s ease-in-out infinite; }
+  .exp-badges { display: flex; flex-direction: column; gap: 6px; }
+
+  .exp-metrics-side {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .esm { background: rgba(56,189,248,.05); border: 1px solid var(--border); border-radius: var(--r); padding: 12px 16px; }
+  .esm-v { font-family: var(--sans); font-size: 1.4rem; font-weight: 800; color: var(--accent); }
+  .esm-l { font-family: var(--mono); font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
+
+  /* right panel */
+  .exp-right { padding: 36px 40px; display: flex; flex-direction: column; gap: 22px; overflow-y: auto; }
+  .exp-summary-box {
+    background: rgba(56,189,248,.04);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 var(--r) var(--r) 0;
+    padding: 16px 20px;
+    font-size: .92rem; color: var(--sub); line-height: 1.85;
+  }
+  .exp-section-title { font-family: var(--mono); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .exp-section-title::before { content: ''; width: 16px; height: 1px; background: var(--accent); }
+  .exp-points { list-style: none; display: grid; gap: 10px; }
+  .exp-points li { display: flex; gap: 12px; align-items: flex-start; font-size: .875rem; color: var(--sub); line-height: 1.75; }
+  .arr { flex-shrink: 0; margin-top: 5px; width: 18px; height: 18px; background: rgba(56,189,248,.1); border: 1px solid rgba(56,189,248,.22); border-radius: 5px; display: grid; place-items: center; color: var(--accent); font-size: .52rem; }
+  .exp-points li strong { color: var(--text); }
+  .stack { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-family: var(--mono); font-size: .65rem; letter-spacing: .06em; color: var(--sub); background: rgba(148,163,184,.06); border: 1px solid rgba(148,163,184,.12); border-radius: 6px; padding: 3px 9px; }
+
+  /* ─── ABOUT ─── */
+  #about { display: grid; grid-template-columns: 1fr 380px; gap: 64px; align-items: start; }
+  .about-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r2); padding: 28px; margin-bottom: 16px; }
+  .about-card p { color: var(--sub); font-size: .92rem; line-height: 1.9; }
+  .about-card p strong { color: var(--text); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .about-item { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 14px 18px; transition: border-color .25s; }
+  .about-item:hover { border-color: var(--accent); }
+  .about-item .lbl { font-family: var(--mono); font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+  .about-item .val { font-size: .88rem; font-weight: 500; color: var(--text); }
+  .lang-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+  .lang-badge { display: flex; align-items: center; gap: 6px; font-size: .82rem; font-weight: 500; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; }
+  .lang-level { font-size: .72rem; color: var(--muted); margin-left: 4px; }
+  .principle-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 20px 22px; margin-bottom: 12px; display: flex; gap: 12px; align-items: flex-start; transition: border-color .3s; }
+  .principle-card:hover { border-color: var(--border2); }
+  .p-icon { width: 34px; height: 34px; flex-shrink: 0; border-radius: 8px; display: grid; place-items: center; font-size: .85rem; }
+
+  /* About portrait */
+  .about-portrait-col { position: sticky; top: 88px; display: flex; flex-direction: column; gap: 16px; }
+  .about-portrait-frame {
+    position: relative;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border2);
+    box-shadow: 0 0 60px rgba(56,189,248,.12), 0 24px 60px rgba(0,0,0,.5);
+  }
+  .about-portrait-frame::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 55%, rgba(6,10,18,.95) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+  .about-portrait-frame img {
+    width: 100%;
+    height: 520px;
+    object-fit: cover;
+    object-position: center 10%;
+    display: block;
+    filter: brightness(.95) contrast(1.05);
+  }
+  .about-portrait-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    z-index: 2;
+    padding: 24px 22px 22px;
+  }
+  .about-portrait-name {
+    font-family: var(--sans);
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .about-portrait-title {
+    font-family: var(--mono);
+    font-size: .7rem;
+    letter-spacing: .1em;
+    color: var(--accent);
+  }
+  .about-portrait-accent {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    z-index: 2;
+  }
+
+  /* ─── SKILLS ─── */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap: 18px; }
+  .skill-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r2); padding: 24px; transition: all .3s; }
+  .skill-card:hover { border-color: var(--border2); box-shadow: var(--glow); }
+  .skill-card-title { font-family: var(--mono); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .pills { display: flex; flex-wrap: wrap; gap: 7px; }
+  .pill { font-size: .8rem; font-weight: 500; color: var(--text); background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 7px; padding: 5px 12px; transition: all .2s; cursor: default; }
+  .pill:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,.07); }
+
+  /* ─── PROJECTS ─── */
+  .projects-wrapper { display: grid; gap: 20px; }
+  .proj-featured { background: var(--card); border: 1px solid var(--border2); border-radius: var(--r2); overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; position: relative; transition: box-shadow .3s; }
+  .proj-featured:hover { box-shadow: var(--glow2); }
+  .proj-featured::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg,var(--accent),var(--accent2)); }
+  .pf-left { padding: 36px; border-right: 1px solid var(--border); }
+  .pf-right { padding: 36px; display: flex; flex-direction: column; gap: 16px; }
+  .proj-feat-badge { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: .65rem; letter-spacing: .12em; text-transform: uppercase; color: var(--bg); background: linear-gradient(135deg,var(--accent),var(--accent2)); border-radius: 100px; padding: 4px 14px; margin-bottom: 16px; }
+  .proj-title { font-family: var(--sans); font-size: 1.3rem; font-weight: 800; color: var(--text); margin-bottom: 12px; }
+  .proj-desc { font-size: .875rem; color: var(--sub); line-height: 1.8; margin-bottom: 18px; }
+  .ptags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+  .ptag { font-family: var(--mono); font-size: .63rem; letter-spacing: .07em; color: var(--gold); background: rgba(251,191,36,.07); border: 1px solid rgba(251,191,36,.2); border-radius: 5px; padding: 3px 9px; }
+  .proj-links-row { display: flex; gap: 10px; }
+  .pl { display: inline-flex; align-items: center; gap: 6px; font-family: var(--sans); font-size: .8rem; font-weight: 600; text-decoration: none; border-radius: 8px; padding: 9px 18px; transition: all .2s; }
+  .pl-solid { color: #fff; background: linear-gradient(135deg,var(--accent),#0ea5e9); box-shadow: 0 2px 12px rgba(56,189,248,.25); }
+  .pl-solid:hover { transform: translateY(-1px); }
+  .pl-ghost { color: var(--sub); border: 1px solid var(--border2); }
+  .pl-ghost:hover { color: var(--accent); border-color: var(--accent); }
+  .feat-point { background: rgba(56,189,248,.04); border: 1px solid var(--border); border-radius: var(--r); padding: 14px 16px; display: flex; align-items: flex-start; gap: 12px; transition: border-color .2s; }
+  .feat-point:hover { border-color: var(--border2); }
+  .fp-icon { width: 32px; height: 32px; flex-shrink: 0; border-radius: 8px; display: grid; place-items: center; font-size: .8rem; }
+  .fp-t { font-size: .82rem; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+  .fp-d { font-size: .78rem; color: var(--sub); }
+  .feat-metrics { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
+  .fm { padding: 14px 10px; text-align: center; border-right: 1px solid var(--border); }
+  .fm:last-child { border-right: none; }
+  .fm-v { font-family: var(--sans); font-size: 1.15rem; font-weight: 800; color: var(--accent); }
+  .fm-l { font-family: var(--mono); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
+  .proj-cards { display: grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap: 18px; }
+  .proj-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r2); padding: 24px; display: flex; flex-direction: column; gap: 12px; transition: all .3s; }
+  .proj-card:hover { border-color: var(--border2); transform: translateY(-3px); box-shadow: var(--glow); }
+  .pc-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .pc-icon { width: 42px; height: 42px; background: linear-gradient(135deg,rgba(56,189,248,.12),rgba(129,140,248,.12)); border: 1px solid var(--border2); border-radius: 10px; display: grid; place-items: center; font-size: 1rem; color: var(--accent); }
+  .pc-links { display: flex; gap: 6px; }
+  .pc-links a { width: 30px; height: 30px; display: grid; place-items: center; border: 1px solid var(--border); border-radius: 6px; color: var(--muted); text-decoration: none; font-size: .78rem; transition: all .2s; }
+  .pc-links a:hover { color: var(--accent); border-color: var(--accent); }
+  .pc-name { font-family: var(--sans); font-size: .95rem; font-weight: 700; color: var(--text); }
+  .pc-desc { font-size: .82rem; color: var(--sub); line-height: 1.7; flex: 1; }
+  .pc-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: auto; }
+
+  /* ─── EDUCATION ─── */
+  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .edu-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r2); overflow: hidden; position: relative; transition: all .3s; }
+  .edu-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg,var(--accent),var(--accent2)); }
+  .edu-card:hover { border-color: var(--border2); box-shadow: var(--glow); transform: translateY(-3px); }
+  .edu-img { width: 100%; height: 160px; object-fit: cover; display: block; border-bottom: 1px solid var(--border); background: var(--card2); }
+  .edu-img-placeholder { width: 100%; height: 160px; background: linear-gradient(135deg, rgba(56,189,248,.08), rgba(129,140,248,.06)); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--muted); font-family: var(--mono); font-size: .7rem; letter-spacing: .1em; }
+  .edu-body { padding: 28px; }
+  .edu-lv { font-family: var(--mono); font-size: .65rem; letter-spacing: .12em; text-transform: uppercase; color: var(--bg); background: var(--accent2); border-radius: 6px; padding: 3px 10px; display: inline-block; margin-bottom: 14px; }
+  .edu-deg { font-family: var(--sans); font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 5px; }
+  .edu-sch { font-size: .84rem; color: var(--accent); font-family: var(--mono); margin-bottom: 8px; }
+  .edu-yr { font-family: var(--mono); font-size: .72rem; color: var(--muted); display: inline-flex; align-items: center; gap: 5px; margin-bottom: 16px; }
+  .edu-hi { list-style: none; display: grid; gap: 6px; }
+  .edu-hi li { font-size: .84rem; color: var(--sub); padding-left: 14px; position: relative; line-height: 1.6; }
+  .edu-hi li::before { content: '▸'; position: absolute; left: 0; color: var(--accent); font-size: .7rem; top: 4px; }
+
+  /* ─── CERTIFICATIONS ─── */
+  .cert-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .cert-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r2); padding: 26px; display: flex; gap: 18px; transition: all .3s; }
+  .cert-card:hover { border-color: rgba(251,191,36,.3); box-shadow: 0 0 30px rgba(251,191,36,.08); transform: translateY(-2px); }
+  .cert-icon { width: 50px; height: 50px; flex-shrink: 0; border-radius: 12px; background: linear-gradient(135deg,rgba(251,191,36,.12),rgba(245,158,11,.08)); border: 1px solid rgba(251,191,36,.25); display: grid; place-items: center; font-size: 1.2rem; color: var(--gold); }
+  .cert-icon-img { width: 70px; height: 70px; flex-shrink: 0; border-radius: 12px; border: 1px solid var(--border2); overflow: hidden; background: var(--card2); display: grid; place-items: center; }
+  .cert-icon-img img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
+  .cert-name { font-family: var(--sans); font-size: .92rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .cert-issuer { font-size: .8rem; color: var(--sub); margin-bottom: 4px; }
+  .cert-date { font-family: var(--mono); font-size: .68rem; color: var(--muted); margin-bottom: 12px; }
+  .cert-verify { display: inline-flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: .68rem; letter-spacing: .07em; color: var(--gold); text-decoration: none; border: 1px solid rgba(251,191,36,.25); border-radius: 5px; padding: 4px 10px; transition: all .2s; }
+  .cert-verify:hover { background: rgba(251,191,36,.1); }
+
+  /* ─── CONTACT ─── */
+  .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .contact-cards { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+  .contact-card { display: flex; align-items: center; gap: 14px; background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 15px 20px; text-decoration: none; color: var(--text); transition: all .25s; }
+  .contact-card:hover { border-color: var(--accent); color: var(--accent); transform: translateX(4px); }
+  .cc-icon { width: 36px; height: 36px; display: grid; place-items: center; background: rgba(56,189,248,.08); border: 1px solid var(--border2); border-radius: 8px; color: var(--accent); font-size: .85rem; flex-shrink: 0; }
+  .cc-lbl { font-family: var(--mono); font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .cc-val { font-size: .88rem; }
+  .soc-row { display: flex; gap: 10px; }
+  .soc-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 7px; font-size: .78rem; font-weight: 600; color: var(--sub); background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 11px; text-decoration: none; transition: all .2s; }
+  .soc-btn:hover { color: var(--accent); border-color: var(--accent); }
+  .form-wrap { display: flex; flex-direction: column; gap: 14px; }
+  .form-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field label { font-family: var(--mono); font-size: .65rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .field input, .field textarea { background: var(--card); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: var(--sans); font-size: .88rem; padding: 11px 15px; outline: none; transition: border-color .2s; width: 100%; }
+  .field input:focus, .field textarea:focus { border-color: var(--accent); }
+  .field textarea { min-height: 120px; resize: vertical; }
+
+  /* ─── FOOTER ─── */
+  footer { border-top: 1px solid var(--border); padding: 28px 8%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  footer p { font-family: var(--mono); font-size: .72rem; color: var(--muted); }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  /* ─── BACK TO TOP ─── */
+  #back-top { position: fixed; bottom: 28px; right: 28px; z-index: 99; width: 42px; height: 42px; display: grid; place-items: center; background: var(--card2); border: 1px solid var(--border2); border-radius: 10px; color: var(--accent); font-size: .85rem; text-decoration: none; opacity: 0; pointer-events: none; transition: all .3s; }
+  #back-top.show { opacity: 1; pointer-events: all; }
+  #back-top:hover { background: var(--accent); color: var(--bg); }
+
+  /* ─── REVEAL ─── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .65s ease, transform .65s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ─── RESPONSIVE ─── */
+  @media(max-width:960px) {
+    #home { grid-template-columns: 1fr; text-align: center; padding-top: 96px; }
+    .hero-text { order: 2; } .hero-visual { order: 1; }
+    .hero-bio { margin: 0 auto 36px; }
+    .hero-actions { justify-content: center; }
+    .hero-socials { justify-content: center; }
+    .hero-kpis { max-width: 400px; margin: 44px auto 0; }
+    .hero-chips { margin: 0 auto; }
+    .exp-card-inner { grid-template-columns: 1fr; }
+    .exp-left { border-right: none; border-bottom: 1px solid var(--border); }
+    #about { grid-template-columns: 1fr; gap: 40px; }
+    .about-portrait-col { position: static; }
+    .about-portrait-frame img { height: 340px; object-position: center 5%; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .proj-featured { grid-template-columns: 1fr; }
+    .pf-left { border-right: none; border-bottom: 1px solid var(--border); }
+    .edu-grid, .cert-grid, .contact-wrap, .form-row2 { grid-template-columns: 1fr; }
+    nav { display: none; flex-direction: column; position: fixed; top: 64px; left: 0; right: 0; background: rgba(6,10,18,.97); padding: 20px 5%; border-bottom: 1px solid var(--border); z-index: 199; }
+    nav.open { display: flex; }
+    #menu-btn { display: block; }
+  }
+  </style>
 </head>
-<body oncontextmenu="return false">
+<body>
+<div class="grid-bg"></div>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
 
-<header>
-  <a href="#home" class="logo" aria-label="Go to home">NOUIH Omar</a>
-  <button id="menu" class="fas fa-bars" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation"></button>
-  <nav class="navbar" id="primary-nav">
-    <ul>
-      <li><a class="active" href="#home">HOME</a></li>
-      <li><a href="#about">ABOUT</a></li>
-      <li><a href="#skills">SKILLS</a></li>
-      <li><a href="#education">EDUCATION</a></li>
-      <li><a href="#certifications">CERTIFICATIONS</a></li>
-      <li><a href="#work">PROJECTS</a></li>
-      <li><a href="#experience">EXPERIENCE</a></li>
-      <li><a href="#contact">CONTACT</a></li>
-    </ul>
+<!-- HEADER -->
+<header id="hdr">
+  <a href="#home" class="logo">Omar <span>Nouih</span></a>
+  <nav id="nav">
+    <a href="#home" class="active">Home</a>
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+    <a href="#contact" class="nav-hire">Hire Me</a>
   </nav>
+  <button id="menu-btn" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
 </header>
-<script>
-(function(){
-  const header = document.querySelector('header');
-  const menuBtn = document.getElementById('menu');
-  const nav = header.querySelector('.navbar');
-  const links = Array.from(nav.querySelectorAll('a[href^="#"]'));
 
-  /* scroll shadow state */
-  function setScrolled(){ 
-    header.classList.toggle('is-scrolled', window.scrollY > 10);
-  }
-  setScrolled();
-  window.addEventListener('scroll', setScrolled);
-
-  /* mobile toggle */
-  function toggleNav(){
-    nav.classList.toggle('nav-toggle');
-    menuBtn.classList.toggle('fa-times');
-    const expanded = nav.classList.contains('nav-toggle');
-    menuBtn.setAttribute('aria-expanded', expanded ? 'true':'false');
-  }
-  menuBtn.addEventListener('click', toggleNav);
-
-  /* close nav on link click (mobile) + set active */
-  links.forEach(link=>{
-    link.addEventListener('click', e=>{
-      // update active class immediately for visual feedback
-      links.forEach(l=>l.classList.remove('active'));
-      e.currentTarget.classList.add('active');
-
-      // close mobile nav if open
-      if(nav.classList.contains('nav-toggle')){
-        nav.classList.remove('nav-toggle');
-        menuBtn.classList.remove('fa-times');
-        menuBtn.setAttribute('aria-expanded','false');
-      }
-    });
-  });
-
-  /* highlight active section on scroll */
-  const sectionEls = links
-    .map(l=>document.querySelector(l.getAttribute('href')))
-    .filter(Boolean);
-
-  function updateActiveOnScroll(){
-    const offset = header.offsetHeight + 40; // header + margin
-    let currentId = null;
-    for(const sec of sectionEls){
-      const rect = sec.getBoundingClientRect();
-      if(rect.top - offset <= 0 && rect.bottom - offset > 0){
-        currentId = '#'+sec.id;
-        break;
-      }
-    }
-    if(currentId){
-      links.forEach(l=>l.classList.toggle('active', l.getAttribute('href')===currentId));
-    }
-  }
-  window.addEventListener('scroll', updateActiveOnScroll, {passive:true});
-  window.addEventListener('resize', updateActiveOnScroll);
-  updateActiveOnScroll();
-})();
-</script>
-
-<section class="home" id="home">
-  <div id="particles-js"></div>
-  <div class="content">
-      <h2>HI THERE,<br/> I'M OMAR <span>NOUIH</span></h2>
-      <p>I'M AN <span class="typing-text">AI & DATA SCIENCE ENGINEER</span></p>
-      <a href="#about" class="btn"><span>ABOUT ME</span>
-          <i class="fas fa-arrow-circle-down"></i>
-      </a>
-      <div class="socials">
-          <ul class="social-icons">
-              <li><a class="linkedin" aria-label="LinkedIn" href="https://www.linkedin.com/in/omarnouih/" target="_blank"><i class="fab fa-linkedin"></i></a></li> 
-              <li><a class="github" aria-label="GitHub" href="https://github.com/omarnouih" target="_blank"><i class="fab fa-github"></i></a></li>
-              <li><a class="twitter" aria-label="Twitter" href="https://twitter.com/omar_nouih" target="_blank"><i class="fab fa-twitter"></i></a></li>
-              <li><a class="telegram" aria-label="Telegram" href="https://t.me/omar_nouih" target="_blank"><i class="fab fa-telegram-plane"></i></a></li>
-              <li><a class="instagram" aria-label="Instagram" href="https://www.instagram.com/omar.nouih"><i class="fab fa-instagram" target="_blank"></i></a></li>
-              <li><a class="dev" aria-label="Facebook" href="https://web.facebook.com/omar.nouih" target="_blank"><i class="fab fa-facebook"></i></a></li>
-          </ul>
-      </div>
+<!-- HERO -->
+<section id="home">
+  <div class="hero-text reveal">
+    <div class="hero-eyebrow"><span class="dot-green"></span>Open to opportunities</div>
+    <h1 class="hero-name">NOUIH<br><span class="grad">Omar</span></h1>
+    <p class="hero-role" id="role-el"><span class="cursor"></span></p>
+    <p class="hero-bio">Master's in AI &amp; Data Science (FST Tanger). I design intelligent data systems, LLM-powered assistants, and real-time pipelines that turn raw data into concrete business value.</p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-solid"><i class="fas fa-bolt"></i> View Projects</a>
+      <a href="./assets/CV_NHOMAR.pdf" target="_blank" class="btn-ghost"><i class="fas fa-file-arrow-down"></i> Download CV</a>
+    </div>
+    <div class="hero-socials">
+      <a href="https://www.linkedin.com/in/omarnouih/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://github.com/omarnouih" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a href="https://twitter.com/omar_nouih" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="mailto:omarnouih@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      <a href="https://t.me/omar_nouih" target="_blank" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+    </div>
+    <div class="hero-kpis">
+      <div class="hero-kpi"><div class="hero-kpi-val">4+</div><div class="hero-kpi-lbl">Experiences</div></div>
+      <div class="hero-kpi"><div class="hero-kpi-val">7+</div><div class="hero-kpi-lbl">Projects</div></div>
+      <div class="hero-kpi"><div class="hero-kpi-val">2K+</div><div class="hero-kpi-lbl">Users Served</div></div>
+      <div class="hero-kpi"><div class="hero-kpi-val">95%</div><div class="hero-kpi-lbl">SQL Accuracy</div></div>
+    </div>
   </div>
-  <div class="image">
-      <img draggable="false" class="tilt" src="./assets/images/5.jpeg" alt="">
+
+  <div class="hero-visual reveal" style="transition-delay:.18s">
+    <div class="avatar-wrap">
+      <div class="ring-outer"></div>
+      <div class="ring-inner"></div>
+      <img class="avatar-img" id="avatar-img"
+        src="./assets/images/5.jpeg" alt="Omar Nouih"
+        onerror="this.src='https://ui-avatars.com/api/?name=Omar+Nouih&background=0e1525&color=38bdf8&size=300&bold=true&font-size=0.3'">
+    </div>
+    <div class="status-badge"><span class="dot-green"></span>Available · Casablanca, Morocco</div>
+    <!-- Chips neatly below photo, not overlapping -->
+    <div class="hero-chips">
+      <div class="chip"><strong>95%</strong>&nbsp;SQL Accuracy</div>
+      <div class="chip"><strong>2K+</strong>&nbsp;Users Served</div>
+      <div class="chip"><i class="fas fa-brain" style="color:var(--accent2)"></i>GPT-4o · LangChain</div>
+      <div class="chip"><i class="fas fa-stream" style="color:var(--green)"></i>Real-time Pipelines</div>
+    </div>
   </div>
 </section>
 
-<section class="about" id="about">
-    <h2 class="heading">ABOUT <span style="color: #ffcc00">ME </span><i class="fas fa-user-alt"></i></h2>
-    <div class="about-container">
-        <div class="content">
-            <h3>I'M <span style="color: #ffcc00">NOUIH OMAR</span></h3>
-            <span class="tag">DATA SCIENTIST & AI ENGINEER</span>
-                  <blockquote class="quote">"WITH A PASSION FOR AI, I TURN IDEAS INTO INNOVATIVE SOLUTIONS."</blockquote>
-                  <p>DATA SCIENTIST & SOFTWARE DEVELOPER BASED IN BERRECHID, MOROCCO. WITH A PASSION FOR ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING, I HAVE WORKED ON VARIOUS PROJECTS THAT APPLY AI TO FIELDS LIKE HUMAN RESOURCES, AVIATION, AND AGRICULTURE.</p>
-                  <p>HOLDER OF A MASTER'S DEGREE IN ARTIFICIAL INTELLIGENCE AND DATA SCIENCE FROM FST TANGER, I AM ACTIVELY SEEKING NEW PROFESSIONAL OPPORTUNITIES TO WIN REAL-WORLD CHALLENGES. I AM PROFICIENT IN TECHNOLOGIES SUCH AS PYTHON, JAVA, FLASK, AND SEVERAL MACHINE LEARNING FRAMEWORKS INCLUDING PYTORCH AND SCIKIT-LEARN.</p>
-              <div class="box-container">
-               <div class="box">
-                  <p><span>EMAIL:</span> OMARNOUIH@GMAIL.COM</p>
-                  <p><span>LOCATION:</span> CASABLANCA, MOROCCO</p>
-                  <p><span>PHONE:</span> 0709725235 </p>
+<div class="div"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="sec-eyebrow">Professional Journey</div>
+  <h2 class="sec-title">Work <span class="hi">Experience</span></h2>
+
+  <div class="exp-carousel-outer reveal">
+    <div class="exp-nav-bar">
+      <div class="exp-dots" id="exp-dots"></div>
+      <span class="exp-counter" id="exp-counter">1 / 6</span>
+      <div class="exp-arrows">
+        <button class="exp-arrow" id="exp-prev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+        <button class="exp-arrow" id="exp-next" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+    <div class="exp-track-wrapper">
+      <div class="exp-track" id="exp-track">
+
+        <!-- 1: Chef de Projet -->
+        <div class="exp-card">
+          <div class="exp-card-inner">
+            <div class="exp-left">
+              <div class="exp-logo"><img src="./assets/images/datasc.png" alt="DataScale" onerror="this.parentElement.textContent='DS'"></div>
+              <div>
+                <div class="exp-role">Chef de Projet Data &amp; IA</div>
+                <a href="https://datascalebusiness.io/" target="_blank" class="exp-company">DataScale Business <i class="fas fa-arrow-up-right-from-square" style="font-size:.65rem"></i></a>
+                <div class="exp-badges">
+                  <span class="badge b-type">Full-time</span>
+                  <span class="badge b-now"><span class="bdot"></span>Jan 2026 – Present</span>
+                </div>
+              </div>
+              <div class="exp-metrics-side">
+                <div class="esm"><div class="esm-v">5+</div><div class="esm-l">Clients Managed</div></div>
+                <div class="esm"><div class="esm-v">3</div><div class="esm-l">Teams Coordinated</div></div>
+                <div class="esm"><div class="esm-v">100%</div><div class="esm-l">On-time Delivery</div></div>
               </div>
             </div>
-            <div class="resumebtn">
-                <a href="CV_NHOMAR.pdf" target="_blank" class="btn"><span>RESUME</span>
-                    <i class="fas fa-chevron-right"></i>
-                </a>
+            <div class="exp-right">
+              <div class="exp-summary-box">
+                Leading end-to-end data &amp; AI project delivery at DataScale Business — managing technical teams, driving innovation in BI and AI solutions, and acting as primary technical liaison for clients across multiple industries including retail, finance, and logistics.
+              </div>
+              <div>
+                <div class="exp-section-title">Key Responsibilities</div>
+                <ul class="exp-points">
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Piloting <strong>AI product roadmaps</strong> from scoping and architecture through deployment, ensuring alignment between business objectives and technical feasibility at every milestone.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Coordinating cross-functional teams (data engineers, ML engineers, BI developers) to deliver <strong>custom AI and BI solutions</strong>: predictive models, NLP engines, and executive dashboards tailored per client.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Establishing <strong>data governance frameworks</strong> and best practices for clients migrating to cloud-based data architectures, covering access controls, lineage, and quality checks.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Translating complex business requirements into actionable <strong>data engineering tasks</strong>, sprint backlogs, and deliverables — serving as the bridge between stakeholders and engineering teams.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Running workshops and <strong>technical demos</strong> for C-level clients, presenting AI capabilities, BI insights, and ROI projections to drive buy-in and expansion.</span></li>
+                </ul>
+              </div>
+              <div>
+                <div class="exp-section-title">Tech Stack</div>
+                <div class="stack">
+                  <span class="tag">LLMs</span><span class="tag">Power BI</span><span class="tag">Python</span><span class="tag">ETL/ELT</span><span class="tag">Cloud BI</span><span class="tag">Looker Studio</span><span class="tag">Project Management</span><span class="tag">Azure</span>
+                </div>
+              </div>
             </div>
-        </div>
-    </div>
-</section>
-    
-<section class="skills" id="skills">
-  <h2 class="heading">SKILLS &amp; <span>ABILITIES</span> <i class="fas fa-laptop-code"></i></h2>
-  <div class="container">
-    <div class="skills-groups">
-
-      <!-- ========== CORE AI & DATA SCIENCE ========== -->
-      <h3 class="skills-cat"><i class="fas fa-brain"></i> Core AI &amp; Data Science</h3>
-      <div class="skills-grid" data-cat="ai-ml">
-        <div class="bar"><div class="info">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
-          <span>Python</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch">
-          <span>PyTorch</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow">
-          <span>TensorFlow</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/keras.svg" alt="Keras">
-          <span>Keras</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/scikitlearn.svg" alt="Scikit-learn">
-          <span>Scikit-learn</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/huggingface.svg" alt="Hugging Face">
-          <span>Transformers / HF</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/spacy.svg" alt="SpaCy">
-          <span>SpaCy / NLP</span>
-        </div></div>
-        <div class="bar "><div class="info">
-          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/langchain.svg" alt="LangChain">
-          <span>LangChain &amp; LLM</span>
-        </div></div>
-      </div>
-
-      <!-- ========== BIG DATA & REAL‑TIME PIPELINES ========== -->
-      <h3 class="skills-cat"><i class="fas fa-database"></i> Big Data &amp; Real‑Time</h3>
-      <div class="skills-grid" data-cat="bigdata">
-        <div class="bar"><div class="info">
-          <img src="https://icon.icepanel.io/Technology/svg/Apache-Spark.svg" alt="Apache Spark">
-          <span>Apache Spark</span>
-        </div></div>
-        <div class="bar"><div class="info">
-            <img src="https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/apachespark.svg" alt="PySpark">
-          <span>PySpark</span>
-        </div></div>
-        <div class="bar"><div class="info">
-            <img src="https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/apachespark.svg" alt="Spark Streaming">
-          <span>Spark Streaming</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/apachekafka.svg" alt="Apache Kafka">
-          <span>Apache Kafka</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apacheairflow/apacheairflow-original.svg" alt="Apache Airflow">
-          <span>Airflow</span>
-        </div></div>
-      </div>
-
-      <!-- ========== DATA PLATFORMS & DATABASES ========== -->
-      <h3 class="skills-cat"><i class="fas fa-server"></i> Data Platforms &amp; Databases</h3>
-      <div class="skills-grid" data-cat="databases">
-        <div class="bar"><div class="info">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
-          <span>MySQL</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL">
-          <span>PostgreSQL</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg" alt="SQL Server">
-          <span>SQL Server</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB">
-          <span>MongoDB</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg" alt="SQLite">
-          <span>SQLite</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/googlebigquery.svg" alt="BigQuery">
-          <span>BigQuery</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/databricks.svg" alt="Databricks">
-          <span>Databricks</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/redash.svg" alt="Databricks">
-          <span>Redash</span>
-        </div></div>
-      </div>
-
-      <!-- ========== BACKEND, APIS & WEB ========== -->
-      <h3 class="skills-cat"><i class="fas fa-code"></i> Backend, APIs &amp; Web</h3>
-      <div class="skills-grid" data-cat="backend">
-        <div class="bar"><div class="info">
-          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/fastapi.svg" alt="FastAPI">
-          <span>FastAPI</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" alt="Flask">
-          <span>Flask</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img class="invertable" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django">
-          <span>Django</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg" alt="Angular">
-          <span>Angular</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
-          <span>HTML5</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
-          <span>CSS3</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
-          <span>Java</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP">
-          <span>PHP</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <!-- PyQt -->
-          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/qt.svg" alt="Qt / PyQt">
-          <span>PyQt</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/python.svg" alt="Qt / PyQt">
-          <span>Tkinter</span>
-        </div></div>
-      </div>
-
-      <!-- ========== DEVOPS, CLOUD & PRODUCTIVITY ========== -->
-      <h3 class="skills-cat"><i class="fas fa-tools"></i> DevOps, Cloud &amp; Productivity</h3>
-      <div class="skills-grid" data-cat="devops">
-        <div class="bar"><div class="info">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker">
-          <span>Docker</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git">
-          <span>Git</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub">
-          <span>GitHub</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <!-- PyCharm -->
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pycharm/pycharm-original.svg" alt="PyCharm">
-          <span>PyCharm</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <!-- Linux -->
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux">
-          <span>Linux (Ubuntu)</span>
-        </div></div>
-      </div>
-
-      <!-- ========== DATA VIZ, DOCS & CREATIVE ========== -->
-      <h3 class="skills-cat"><i class="fas fa-chart-line"></i> Data Viz, Docs &amp; Creative</h3>
-      <div class="skills-grid" data-cat="viz">
-        <div class="bar"><div class="info">
-          <!-- Power BI officiel (noir) -->
-          <img class="si" src="https://upload.wikimedia.org/wikipedia/commons/c/c9/Power_bi_logo_black.svg" alt="Power BI">
-          <span>Power BI</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <!-- Looker Studio (SimpleIcons looker) -->
-          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/looker.svg" alt="Looker Studio">
-          <span>Looker Studio</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <!-- Matplotlib -->
-          <img class="si" src="https://upload.wikimedia.org/wikipedia/commons/8/84/Matplotlib_icon.svg" alt="Matplotlib">
-          <span>Matplotlib</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/adobephotoshop.svg" alt="Photoshop">
-          <span>Photoshop</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/canva.svg" alt="Canva">
-          <span>Canva</span>
-        </div></div>
-        <div class="bar"><div class="info">
-          <img class="si" src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/latex.svg" alt="LaTeX">
-          <span>LaTeX</span>
-        </div></div>
-      </div>
-
-
-    </div><!-- /.skills-groups -->
-  </div><!-- /.container -->
-</section>
-  
-<section class="education edu-section" id="education">
-  <h2 class="heading">MY <span>EDUCATION</span> <i class="fas fa-graduation-cap"></i></h2>
-
-  <p class="edu-quote">
-    <span class="edu-quote-mark">"</span>
-    EDUCATION IS THE KEY TO UNLOCKING THE WORLD, A PASSPORT TO FREEDOM.
-    <span class="edu-quote-mark">"</span>
-  </p>
-
-<div class="edu-cards">
-  <!-- ====== MASTER ====== -->
-  <article class="edu-card tilt">
-    <div class="edu-accent"></div>
-    <div class="edu-img-wrap">
-      <img src="assets/images/educat/FSTT.jpg" alt="Faculty of Science and Technology, Tanger" loading="lazy">
-      <span class="edu-badge">MASTER</span>
-    </div>
-    <div class="edu-content">
-      <h3 class="edu-degree">MASTER / INTELLIGENCE ARTIFICIELLE & DATA SCIENCE</h3>
-      <p class="edu-school">FACULTÉ DES SCIENCES & TECHNIQUES, TANGER</p>
-      <p class="edu-years"><i class="far fa-calendar-alt"></i> 2023 &ndash; 2025</p>
-      <ul class="edu-highlights">
-        <li>Deep Learning, NLP, Vision par ordinateur, LLMs, RAG.</li>
-        <li>Projets : Chatbot académique FSTT, Analyse sentiment Twitter, etc.</li>
-        <li>Mémoire : Assistant conversationnel SQL (Labelvie, GPT-4o + LangChain).</li>
-      </ul>
-    </div>
-  </article>
-
-  <!-- ====== BACHELOR ====== -->
-  <article class="edu-card tilt">
-    <div class="edu-accent"></div>
-    <div class="edu-img-wrap">
-      <img src="assets/images/educat/FSTBM.jpg" alt="Faculty of Science and Technology, Beni Mellal" loading="lazy">
-      <span class="edu-badge">BACHELOR</span>
-    </div>
-    <div class="edu-content">
-      <h3 class="edu-degree">LICENCE / GÉNIE INFORMATIQUE</h3>
-      <p class="edu-school">FACULTÉ DES SCIENCES & TECHNIQUES, BENI MELLAL</p>
-      <p class="edu-years"><i class="far fa-calendar-alt"></i> 2019 &ndash; 2023</p>
-      <ul class="edu-highlights">
-        <li>JAVA, C, PHP, Full Stack Web, Bases de données.</li>
-        <li>Projets : Chatbot RH (Rasa/Twilio), Plateforme services étudiants.</li>
-      </ul>
-    </div>
-  </article>
-</div>
-</section>
-
-
-<section class="certifications" id="certifications">
-  <h2 class="heading">CERTIFICATIONS <span style="color: #ffcc00" >ACHIEVED </span> <i class="fas fa-award"></i></h2>
-  <div class="box-container">
-    <div class="box" style="margin-bottom: 20px;">
-      <div class="image">
-        <img draggable="false" src="assets\images\certa\ML.png" alt="IBM Certification" style="width: 250px; height: 200px;">
-      </div>
-      <div class="content">
-        <h3>IBM ML PROFESSIONAL</h3>
-        <p>COMPLETED THE IBM MACHINE LEARNING, COVERING ESSENTIAL TOPICS IN MACHINE LEARNING AND ARTIFICIAL INTELLIGENCE. THIS CERTIFICATION CONFIRMS THE DEVELOPMENT OF SKILLS IN UNSUPERVISED LEARNING, SUPERVISED LEARNING, DEEP LEARNING, AND REINFORCEMENT LEARNING.</p>
-        <p><a href="https://coursera.org/verify/professional-cert/K39QSKVM3XLV" >VERIFY THIS CERTIFICATE</a></p>
-      </div>
-    </div>
-
-    <div class="box" style="margin-bottom: 20px;">
-      <div class="image">
-        <img draggable="false" src="assets\images\certa\AI.png" alt="AI Fundamentals Certification" style="width: 250px; height: 200px;">
-      </div>
-      <div class="content">
-        <h3>AI FUNDAMENTALS | SKILLUP</h3>
-        <p>THIS CERTIFICATE IS PRESENTED TO OMAR NOUIH FOR THE COMPLETION OF ARTIFICIAL INTELLIGENCE FUNDAMENTALS IN 2024.</p>
-        <p>ACCORDING TO THE YOUR LEARNING BUILDER - PLANS SYSTEM OF RECORD, THE COMPLETION CERTIFICATE WAS AWARDED ON 03 JUN 2024 (GMT).</p>
-        <p><a href="https://skills.yourlearning.ibm.com/certificate/share/8914299c08ewogICJvYmplY3RJZCIgOiAiUExBTi1FODVEMDU3MjI2MkMiLAogICJvYmplY3RUeXBlIiA6ICJBQ1RJVklUWSIsCiAgImxlYXJuZXJDTlVNIiA6ICIyNzk4MTU0UkVHIgp9b96ecdcbfc-10" >VERIFY THIS CERTIFICATE</a></p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="work" id="work">
-    <h2 class="heading">PROJECTS <span>MADE</span> <i class="fas fa-laptop-code"></i></h2>
-    <div class="box-container">
-        <!-- Chatbot for Human Resources -->
-        <div class="box tilt">
-            <img draggable="false" src="./assets/images/projects/FSTRAM.png" alt="Chatbot for Human Resources" />
-            <div class="content">
-                <div class="tag">
-                    <h3>Chatbot for Human Resources</h3>
-                </div>
-                <div class="desc">
-                    <p>Developed a chatbot for HR activities at Royal Air Maroc using Rasa, SpaCy for NLU, and Flask for API integration.</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Restaurant Reservation Website -->
-        <div class="box tilt">
-            <img draggable="false" src="./assets/images/projects/RESTO.png" alt="Restaurant Reservation Website" />
-            <div class="content">
-                <div class="tag">
-                    <h3>Restaurant Reservation Website</h3>
-                </div>
-                <div class="desc">
-                    <p>Designed and developed a restaurant reservation website using HTML, CSS, and PHP.</p>
-                    <div class="btns">
-                        <a href="https://github.com/OmarNouih/GourmetPlace" class="btn" target="_blank"><i class="fas fa-eye"></i> View</a>
-                        <a href="https://github.com/OmarNouih/GourmetPlace" class="btn" target="_blank"><i class="fas fa-code"></i> Code</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-  
-        <!-- Real-Time Sentiment Analysis on Twitter Streams -->
-        <div class="box tilt">
-            <img draggable="false" src="./assets/images/projects/TWITTER.jpg" alt="Real-Time Sentiment Analysis on Twitter Streams" />
-            <div class="content">
-                <div class="tag">
-                    <h3>Real-Time Sentiment Analysis on Twitter Streams</h3>
-                </div>
-                <div class="desc">
-                    <p>A web app for real-time sentiment analysis of Twitter streams using Apache Kafka and machine learning models.</p>
-                    <div class="btns">
-                        <a href="https://github.com/OmarNouih/Twitter-Streams" class="btn" target="_blank"><i class="fas fa-eye"></i> View</a>
-                        <a href="https://github.com/OmarNouih/Twitter-Streams" class="btn" target="_blank"><i class="fas fa-code"></i> Code</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-  
-        <!-- FST Student Services -->
-        <div class="box tilt">
-            <img draggable="false" src="./assets/images/projects/FSTCHAOUIA.png" alt="FST Student Services" />
-            <div class="content">
-                <div class="tag">
-                    <h3>FST Student Services Management Platform</h3>
-                </div>
-                <div class="desc">
-                    <p>Developed a platform for FST student services using JEE, HTML5, CSS3, and JavaScript.</p>
-                    <div class="btns">
-                        <a href="https://github.com/OmarNouih/FSTStudentServices" class="btn" target="_blank"><i class="fas fa-eye"></i> View</a>
-                        <a href="https://github.com/OmarNouih/FSTStudentServices" class="btn" target="_blank"><i class="fas fa-code"></i> Code</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-  
-        <!-- VersaLearn -->
-        <div class="box tilt">
-            <img draggable="false" src="./assets/images/projects/versalean.jpg" alt="VersaLearn" />
-            <div class="content">
-                <div class="tag">
-                    <h3>VersaLearn: Python Data Analysis & ML Tool</h3>
-                </div>
-                <div class="desc">
-                    <p>A Python app for data analysis and machine learning, featuring Tkinter, Pandas, Scikit-learn, and Matplotlib.</p>
-                    <div class="btns">
-                        <a href="https://github.com/OmarNouih/VersaLearn" class="btn" target="_blank"><i class="fas fa-eye"></i> View</a>
-                        <a href="https://github.com/OmarNouih/VersaLearn" class="btn" target="_blank"><i class="fas fa-code"></i> Code</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-  
-        <!-- RucRut Project -->
-        <div class="box tilt">
-            <img draggable="false" src="./assets/images/projects/RUCRUT.png" alt="RucRut Project" />
-            <div class="content">
-                <div class="tag">
-                    <h3>RucRut - AI-Powered Recruitment</h3>
-                </div>
-                <div class="desc">
-                    <p>An AI-powered recruitment platform utilizing Hugging Face, Sentence Transformers, and Flask for personalized interviews.</p>
-                    <div class="btns">
-                        <a href="https://github.com/OmarNouih/SmartRecruit_LLM" class="btn" target="_blank"><i class="fas fa-eye"></i> View</a>
-                        <a href="https://github.com/OmarNouih/SmartRecruit_LLM" class="btn" target="_blank"><i class="fas fa-code"></i> Code</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-  
-        <!-- FSTT-Chatbot -->
-        <div class="box tilt">
-            <img draggable="false" src="./assets/images/projects/CHATBOTFSTT.jpg" alt="FSTT-Chatbot" />
-            <div class="content">
-                <div class="tag">
-                    <h3>FSTT-Chatbot for University Assistance</h3>
-                </div>
-                <div class="desc">
-                    <p>Smart chatbot using Retrieval Augmented Generation (RAG), LangChain, and Vector Databases for FSTT.</p>
-                    <div class="btns">
-                        <a href="https://github.com/AymanAitAhmed/FSTT-Chatbot" class="btn" target="_blank"><i class="fas fa-eye"></i> View</a>
-                        <a href="https://github.com/AymanAitAhmed/FSTT-Chatbot" class="btn" target="_blank"><i class="fas fa-code"></i> Code</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-  
-    <div class="viewall">
-      <a href="https://github.com/OmarNouih" class="btn"><span >View All</span>
-        <i class="fas fa-arrow-right"></i>
-      </a>
-    </div>
-  </section>
-  
-<section class="experience" id="experience">
-        <h2 class="heading">PROFESSIONAL <span>EXPERIENCE</span> <i class="fas fa-briefcase"></i></h2>
-        
-        <div class="box-container">
-            <!-- ================= Labelvie Group ================= -->
-            <div class="box">
-                <div class="content xp-card">
-                    <div class="xp-head">
-                        <div class="xp-logo-wrap">
-                            <img src="./assets/images/labelvie.png" alt="Labelvie Group logo" class="xp-logo" onerror="this.style.display='none';this.parentElement.classList.add('xp-logo-fallback');">
-                            <span class="xp-logo-fallback-text">LV</span>
-                        </div>
-                        <div class="xp-head-meta">
-                            <h3 class="xp-role">AI Engineer & Data Scientist Intern (PFE)</h3>
-                            <h4 class="xp-company">Labelvie Group</h4>
-                            <p class="xp-dates">Mar 2025 – Present</p>
-                        </div>
-                    </div>
-
-                    <ul class="xp-points">
-                        <li>Built enterprise-grade <strong>conversational analytics assistant</strong> integrating messaging platforms with <strong>natural language → SQL</strong> generation using <strong>Large Language Models</strong> and <strong>AI frameworks</strong>, enabling business stakeholders to query retail data in plain language. <em>[Confidential Implementation Details]</em></li>
-                        <li>Implemented <strong>role-based access control</strong> with query sanitization, audit logging, and data masking for sensitive business data, ensuring compliance with internal data governance standards. <em>[Proprietary Security Architecture]</em></li>
-                        <li>Developed automated <strong>executive dashboards</strong> in <strong>Power BI</strong> and business intelligence tools with real-time refresh capabilities, reducing manual reporting time by 80%. <em>[Internal Analytics Platform]</em></li>
-                        <li>Created robust <strong>data quality monitoring</strong> system with Python validators and performance diagnostics for high-volume query optimization on confidential datasets. <em>[Proprietary Data Pipeline]</em></li>
-                    </ul>
-
-                    <div class="xp-impact">
-                        <h4>Key Impact & Achievements</h4>
-                        <div class="xp-metrics">
-                            <div class="xp-metric">
-                                <span class="xp-metric-value">95%</span>
-                                <span class="xp-metric-label">System Accuracy</span>
-                            </div>
-                            <div class="xp-metric">
-                                <span class="xp-metric-value">80%</span>
-                                <span class="xp-metric-label">Process Efficiency</span>
-                            </div>
-                            <div class="xp-metric">
-                                <span class="xp-metric-value">1K+</span>
-                                <span class="xp-metric-label">Daily Operations Test</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="xp-stack" aria-label="Key technologies used">
-                        <span>LLMs</span><span>AI Frameworks</span><span>Azure SQL</span><span>Python</span><span>Power BI</span><span>Data Analytics</span><span>Docker</span><span>FLASK</span><span>NLP</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ================= 3D Smart Factory ================= -->
-            <div class="box">
-                <div class="content xp-card">
-                    <div class="xp-head">
-                        <div class="xp-logo-wrap">
-                            <img src="./assets/images/3dsmartfactory.png" alt="3D Smart Factory logo" class="xp-logo" onerror="this.style.display='none';this.parentElement.classList.add('xp-logo-fallback');">
-                            <span class="xp-logo-fallback-text">3D</span>
-                        </div>
-                        <div class="xp-head-meta">
-                            <h3 class="xp-role">Data Scientist & Lead Developer Intern</h3>
-                            <h4 class="xp-company">3D Smart Factory</h4>
-                            <p class="xp-dates">Jul 2024 – Sep 2024</p>
-                        </div>
-                    </div>
-
-                    <ul class="xp-points">
-                        <li>Architected and developed <strong>RucRut</strong> - an AI-powered recruitment platform featuring advanced <strong>CV parsing</strong>, <strong>semantic matching</strong> between candidates and job requirements, and automated interview question generation using <strong>Hugging Face Transformers</strong>.</li>
-                        <li>Implemented <strong>vector similarity search</strong> with <strong>Sentence Transformers</strong> achieving 87% matching accuracy, significantly improving candidate-job fit over traditional keyword matching.</li>
-                        <li>Built scalable <strong>RESTful microservices</strong> architecture with <strong>Flask</strong> and <strong>MongoDB</strong>, supporting multi-tenant recruiter workflows with real-time collaboration features.</li>
-                        <li>Developed comprehensive <strong>analytics dashboard</strong> using <strong>Angular</strong> with advanced visualizations showing recruitment funnel metrics, candidate scoring distribution, and hiring manager insights.</li>
-                    </ul>
-
-                    <div class="xp-impact">
-                        <h4>Key Impact & Achievements</h4>
-                        <div class="xp-metrics">
-                            <div class="xp-metric">
-                                <span class="xp-metric-value">87%</span>
-                                <span class="xp-metric-label">Match Accuracy</span>
-                            </div>
-                            <div class="xp-metric">
-                                <span class="xp-metric-value">60%</span>
-                                <span class="xp-metric-label">Screening Time ↓</span>
-                            </div>
-                            <div class="xp-metric">
-                                <span class="xp-metric-value">400+</span>
-                                <span class="xp-metric-label">CVs Processed</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="xp-stack" aria-label="Key technologies used">
-                        <span>Hugging Face</span><span>Sentence Transformers</span><span>Flask</span><span>MongoDB</span><span>Angular</span><span>Python</span><span>scikit-learn</span><span>NLTK</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ================= Royal Air Maroc ================= -->
-            <div class="box">
-                <div class="content xp-card">
-                    <div class="xp-head">
-                        <div class="xp-logo-wrap">
-                            <img src="./assets/images/royalairmaroc.png" alt="Royal Air Maroc logo" class="xp-logo" onerror="this.style.display='none';this.parentElement.classList.add('xp-logo-fallback');">
-                            <span class="xp-logo-fallback-text">RAM</span>
-                        </div>
-                        <div class="xp-head-meta">
-                            <h3 class="xp-role">Chatbot Developer Intern</h3>
-                            <h4 class="xp-company">Royal Air Maroc</h4>
-                            <p class="xp-dates">Apr 2023 – Jun 2023</p>
-                        </div>
-                    </div>
-
-                    <ul class="xp-points">
-                        <li>Developed intelligent <strong>HR virtual assistant</strong> using <strong>Rasa NLU</strong> framework with custom <strong>SpaCy</strong> models, achieving 92% intent classification accuracy for employee queries across 50+ HR scenarios.</li>
-                        <li>Integrated with legacy <strong>HR systems</strong> via custom <strong>Flask APIs</strong>, enabling seamless access to leave management, benefits information, and document retrieval with proper authentication.</li>
-                        <li>Successfully deployed production chatbot to <strong>WhatsApp Business</strong> via <strong>Twilio integration</strong>, serving 2000+ employees with 24/7 automated support capabilities.</li>
-                        <li>Built comprehensive <strong>analytics dashboard</strong> tracking conversation flows, intent distribution, and user satisfaction metrics, enabling continuous model improvement and identifying knowledge gaps.</li>
-                    </ul>
-
-                    <div class="xp-impact">
-                        <h4>Key Impact & Achievements</h4>
-                        <div class="xp-metrics">
-                            <div class="xp-metric">
-                                <span class="xp-metric-value">92%</span>
-                                <span class="xp-metric-label">Intent Accuracy</span>
-                            </div>
-                            <div class="xp-metric">
-                                <span class="xp-metric-value">2000+</span>
-                                <span class="xp-metric-label">Active Users</span>
-                            </div>
-                            <div class="xp-metric">
-                                <span class="xp-metric-value">75%</span>
-                                <span class="xp-metric-label">HR Ticket ↓</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="xp-stack" aria-label="Key technologies used">
-                        <span>Rasa</span><span>SpaCy</span><span>Flask</span><span>Twilio</span><span>WhatsApp API</span><span>Python</span><span>PostgreSQL</span><span>Redis</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <script>
-        /* ==========================================================
-           EXPERIENCE CARDS SCROLLER – auto setup
-           ========================================================== */
-        (function(){
-            const section = document.querySelector('section.experience#experience');
-            if(!section) return;
-
-            const track = section.querySelector('.box-container');
-            if(!track) return;
-
-            const cards = Array.from(track.querySelectorAll('.box'));
-            if(!cards.length) return;
-
-            /* ---------- Inject controls (arrows + dots) ---------- */
-            const prevBtn = document.createElement('button');
-            prevBtn.className = 'exp-scroll-btn exp-scroll-prev';
-            prevBtn.type = 'button';
-            prevBtn.innerHTML = '<i class="fas fa-chevron-left" aria-hidden="true"></i><span class="sr-only">Previous</span>';
-
-            const nextBtn = document.createElement('button');
-            nextBtn.className = 'exp-scroll-btn exp-scroll-next';
-            nextBtn.type = 'button';
-            nextBtn.innerHTML = '<i class="fas fa-chevron-right" aria-hidden="true"></i><span class="sr-only">Next</span>';
-
-            const dotsWrap = document.createElement('div');
-            dotsWrap.className = 'exp-scroll-dots';
-            cards.forEach((c,i)=>{
-                const b = document.createElement('button');
-                b.className = 'exp-scroll-dot' + (i===0 ? ' is-active' : '');
-                b.type = 'button';
-                b.dataset.index = i;
-                b.innerHTML = '<span class="sr-only">Go to experience '+(i+1)+'</span>';
-                dotsWrap.appendChild(b);
-            });
-
-            section.appendChild(prevBtn);
-            section.appendChild(nextBtn);
-            section.appendChild(dotsWrap);
-
-            const dots = Array.from(dotsWrap.querySelectorAll('.exp-scroll-dot'));
-
-            /* ---------- Scroll helpers ---------- */
-            function scrollToIndex(i){
-                if(i < 0) i = 0;
-                if(i >= cards.length) i = cards.length - 1;
-                cards[i].scrollIntoView({behavior:'smooth', inline:'start', block:'nearest'});
-            }
-
-            function currentIndex(){
-                const trackRect = track.getBoundingClientRect();
-                let best = 0, bestDist = Infinity;
-                cards.forEach((card,i)=>{
-                    const r = card.getBoundingClientRect();
-                    const center = r.left + r.width/2;
-                    const dist = Math.abs(center - (trackRect.left + trackRect.width/2));
-                    if(dist < bestDist){bestDist = dist; best = i;}
-                });
-                return best;
-            }
-
-            function updateUI(){
-                const idx = currentIndex();
-                dots.forEach((d,i)=>{
-                    const active = i===idx;
-                    d.classList.toggle('is-active', active);
-                    d.setAttribute('aria-selected',active?'true':'false');
-                });
-                prevBtn.disabled = (idx === 0);
-                nextBtn.disabled = (idx === cards.length - 1);
-                prevBtn.classList.toggle('is-disabled', prevBtn.disabled);
-                nextBtn.classList.toggle('is-disabled', nextBtn.disabled);
-            }
-
-            /* ---------- Events ---------- */
-            prevBtn.addEventListener('click', ()=>scrollToIndex(currentIndex()-1));
-            nextBtn.addEventListener('click', ()=>scrollToIndex(currentIndex()+1));
-            dots.forEach(d=>d.addEventListener('click',()=>scrollToIndex(parseInt(d.dataset.index,10))));
-            track.addEventListener('scroll', ()=>window.requestAnimationFrame(updateUI));
-
-})();
-</script>
-
-<section class="contact" id="contact">
-  <h2 class="heading" style="color: #0d47a1;">
-    <i class="fas fa-headset"></i> GET IN <span style="color: #ffc107;">TOUCH</span>
-  </h2>
-
-  <div class="container contact-container">
-    <div class="image-box">
-      <img draggable="true" src="./assets/images/hero.jpg" alt="Profile Image" class="profile-img">
-    </div>
-
-    <form id="contact-form">
-      <div class="form-group">
-        <div class="field">
-          <input type="text" name="name" placeholder="Name" required>
-          <i class='fas fa-user'></i>
-        </div>
-        <div class="field">
-          <input type="email" name="email" placeholder="Email" required>
-          <i class='fas fa-envelope'></i>
-        </div>
-        <div class="field">
-          <input type="tel" name="phone" placeholder="Phone">
-          <i class='fas fa-phone-alt'></i>
-        </div>
-        <div class="message">
-          <textarea placeholder="Message" name="message" required></textarea>
-          <i class="fas fa-comment-dots"></i>
-        </div>
-      </div>
-      <div class="button-area">
-       <button type="submit">Submit <i class="fa fa-paper-plane"></i></button></center>
-      </div>
-    </form>
-  </div>
-</section>
-
-
-<section class="footer">
-
-  <div class="box-container">
-
-      <div class="box">
-          <h3>Omar's Portfolio</h3>
-          <p>Thank you for visiting my personal portfolio website. Connect with me over socials. <br/> <br/> Keep Rising 🚀</p>
-      </div>
-
-      <div class="box">
-          <h3>quick links</h3>
-          <a href="#home"><i class="fas fa-chevron-circle-right"></i> home</a>
-          <a href="#about"><i class="fas fa-chevron-circle-right"></i> about</a>
-          <a href="#skills"><i class="fas fa-chevron-circle-right"></i> skills</a>
-          <a href="#education"><i class="fas fa-chevron-circle-right"></i> education</a>
-          <a href="#work"><i class="fas fa-chevron-circle-right"></i> work</a>
-          <a href="#experience"><i class="fas fa-chevron-circle-right"></i> experience</a>
-      </div>
-
-      <div class="box">
-          <h3>contact info</h3>
-          <p> <i class="fas fa-phone"></i>+212 070-884-9710</p>
-          <p> <i class="fas fa-envelope"></i>omar.nouih@etu.uae.ac.ma</p>
-          <p> <i class="fas fa-envelope"></i>omarnouih@gmail.com</p>
-          <p> <i class="fas fa-map-marked-alt"></i>IMM 29 APPT 125 BEN CHAIB BERRECHID, Morocco</p>
-          <div class="share">
-
-              <a href="https://www.linkedin.com/in/omarnouih" class="fab fa-linkedin" aria-label="LinkedIn" target="_blank"></a>
-              <a href="https://github.com/omarnouih" class="fab fa-github" aria-label="GitHub" target="_blank"></a>
-              <a href="mailto:omar.nouih@etu.uae.ac.ma" class="fas fa-envelope" aria-label="Mail" target="_blank"></a>
-              <a href="mailto:omarnouih@gmail.com" class="fas fa-envelope" aria-label="Mail" target="_blank"></a>
           </div>
-      </div>
-  </div>
+        </div>
 
+        <!-- 2: Data Engineer DataScale -->
+        <div class="exp-card">
+          <div class="exp-card-inner">
+            <div class="exp-left">
+              <div class="exp-logo"><img src="./assets/images/datasc.png" alt="DataScale" onerror="this.parentElement.textContent='DS'"></div>
+              <div>
+                <div class="exp-role">Data Engineer</div>
+                <a href="https://datascalebusiness.io/" target="_blank" class="exp-company">DataScale Business <i class="fas fa-arrow-up-right-from-square" style="font-size:.65rem"></i></a>
+                <div class="exp-badges">
+                  <span class="badge b-type">Full-time</span>
+                  <span class="badge b-date">Nov 2025 – Jan 2026</span>
+                </div>
+              </div>
+              <div class="exp-metrics-side">
+                <div class="esm"><div class="esm-v">10+</div><div class="esm-l">Pipelines Built</div></div>
+                <div class="esm"><div class="esm-v">4+</div><div class="esm-l">Dashboards Delivered</div></div>
+                <div class="esm"><div class="esm-v">3+</div><div class="esm-l">AI Solutions Deployed</div></div>
+              </div>
+            </div>
+            <div class="exp-right">
+              <div class="exp-summary-box">
+                Designed and built on-premise and cloud BI architectures, engineered robust data pipelines, and delivered AI-powered analytical solutions tailored to clients' operational needs across diverse industries.
+              </div>
+              <div>
+                <div class="exp-section-title">Key Responsibilities</div>
+                <ul class="exp-points">
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Architected <strong>ETL/ELT pipelines</strong> connecting heterogeneous data sources (ERP, CRM, flat files, APIs) into unified analytics layers on both on-premise SQL Server and cloud environments.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Developed <strong>custom AI solutions</strong> including predictive demand models, NLP text classification engines, and conversational business assistants using Python and LLM frameworks.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Built interactive <strong>Power BI and Looker Studio dashboards</strong> with real-time data refresh, drill-through analytics, and KPI monitoring for client executive teams.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Implemented <strong>data quality validation layers</strong> — automated anomaly detection, schema drift alerting, and reconciliation reports to ensure pipeline reliability at scale.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Collaborated directly with client data teams to document requirements, design <strong>data models (star/snowflake schemas)</strong>, and optimize SQL query performance for reporting workloads.</span></li>
+                </ul>
+              </div>
+              <div>
+                <div class="exp-section-title">Tech Stack</div>
+                <div class="stack">
+                  <span class="tag">Python</span><span class="tag">ETL/ELT</span><span class="tag">Power BI</span><span class="tag">Looker Studio</span><span class="tag">SQL Server</span><span class="tag">PostgreSQL</span><span class="tag">NLP</span><span class="tag">Predictive Models</span><span class="tag">Azure</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3: Labelvie ML -->
+        <div class="exp-card">
+          <div class="exp-card-inner">
+            <div class="exp-left">
+              <div class="exp-logo"><img src="./assets/images/labelvie.png" alt="Labelvie" onerror="this.parentElement.textContent='LV'"></div>
+              <div>
+                <div class="exp-role">Machine Learning Engineer</div>
+                <span class="exp-company" style="cursor:default">Labelvie Group</span>
+                <div class="exp-badges">
+                  <span class="badge b-type">Freelance</span>
+                  <span class="badge b-date">Sept 2025 · 1 month</span>
+                </div>
+              </div>
+              <div class="exp-metrics-side">
+                <div class="esm"><div class="esm-v">10K+</div><div class="esm-l">Products Analyzed</div></div>
+                <div class="esm"><div class="esm-v">CamemBERT</div><div class="esm-l">Model Used</div></div>
+                <div class="esm"><div class="esm-v">XGBoost</div><div class="esm-l">Best Regressor</div></div>
+              </div>
+            </div>
+            <div class="exp-right">
+              <div class="exp-summary-box">
+                As a Freelance ML Engineer, analyzed e-commerce product datasets (10K+ products) and developed an automated pipeline to estimate product weight attributes directly from textual labels — improving data quality and supporting business analytics initiatives at Labelvie.
+              </div>
+              <div>
+                <div class="exp-section-title">Key Achievements</div>
+                <ul class="exp-points">
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Analyzed and cleaned a dataset of <strong>10,000+ e-commerce product entries</strong>, handling missing values, outlier detection, and label normalization for product weight attributes.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Trained <strong>CamemBERT-based NLP models</strong> with transfer learning to extract weight signals from French product names and descriptions — leveraging pre-trained bilingual embeddings.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Combined NLP embeddings with <strong>regression models (XGBoost, Ridge, Linear Regression)</strong> for robust weight predictions across diverse product categories (food, hygiene, electronics).</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Built a complete <strong>preprocessing and feature engineering pipeline</strong>: unit extraction via regex, numeric pattern recognition, and category-aware normalization for 10K+ SKUs.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Delivered the project <strong>fully remote</strong>, providing well-documented Jupyter notebooks, model artifacts, and a final report with performance benchmarks across product subcategories.</span></li>
+                </ul>
+              </div>
+              <div>
+                <div class="exp-section-title">Tech Stack</div>
+                <div class="stack">
+                  <span class="tag">CamemBERT</span><span class="tag">Transfer Learning</span><span class="tag">XGBoost</span><span class="tag">NLP</span><span class="tag">Python</span><span class="tag">Scikit-learn</span><span class="tag">Pandas</span><span class="tag">Regex</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4: Labelvie PFE Intern -->
+        <div class="exp-card">
+          <div class="exp-card-inner">
+            <div class="exp-left">
+              <div class="exp-logo"><img src="./assets/images/labelvie.png" alt="Labelvie" onerror="this.parentElement.textContent='LV'"></div>
+              <div>
+                <div class="exp-role">Data Scientist — PFE Intern</div>
+                <span class="exp-company" style="cursor:default">Labelvie Group</span>
+                <div class="exp-badges">
+                  <span class="badge b-type">Internship (PFE)</span>
+                  <span class="badge b-date">Mar 2025 – Aug 2025</span>
+                </div>
+              </div>
+              <div class="exp-metrics-side">
+                <div class="esm"><div class="esm-v">95%</div><div class="esm-l">SQL Accuracy</div></div>
+                <div class="esm"><div class="esm-v">80%</div><div class="esm-l">Reporting Time Saved</div></div>
+                <div class="esm"><div class="esm-v">1K+</div><div class="esm-l">Daily Queries Tested</div></div>
+              </div>
+            </div>
+            <div class="exp-right">
+              <div class="exp-summary-box">
+                Master's thesis internship: designed and developed a decision-support assistant enabling business teams to query retail data using natural language (French/Arabic), deployed directly on WhatsApp. Also automated Excel reporting and built real-time BI dashboards.
+              </div>
+              <div>
+                <div class="exp-section-title">Key Achievements</div>
+                <ul class="exp-points">
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Designed a <strong>natural language to SQL chatbot</strong> (GPT-4o + LangChain) that interprets complex business questions in French/Arabic and generates accurate, sanitized SQL against Azure SQL retail databases.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Deployed the assistant on <strong>WhatsApp via Flask + WhatsApp Business API</strong> with role-based access control (RBAC), query sanitization layers, and full audit logging for data governance compliance.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Implemented a <strong>data quality monitoring system</strong> with Python validators, schema drift alerts, and performance diagnostics for high-volume queries on confidential retail datasets.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Automated <strong>Excel business reporting workflows</strong> with Python (openpyxl, pandas) — eliminating manual copy-paste processes and saving the team ~80% of weekly reporting time.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Designed <strong>Power BI and Looker Studio dashboards</strong> with real-time data refresh, enabling non-technical managers to self-serve sales KPIs, stock levels, and supply chain metrics.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Containerized the full solution with <strong>Docker</strong> for reproducible deployment across dev, staging, and production environments.</span></li>
+                </ul>
+              </div>
+              <div>
+                <div class="exp-section-title">Tech Stack</div>
+                <div class="stack">
+                  <span class="tag">GPT-4o</span><span class="tag">LangChain</span><span class="tag">Azure SQL</span><span class="tag">Flask</span><span class="tag">WhatsApp API</span><span class="tag">Power BI</span><span class="tag">Looker Studio</span><span class="tag">Docker</span><span class="tag">Python</span><span class="tag">NLP</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5: 3D Smart Factory -->
+        <div class="exp-card">
+          <div class="exp-card-inner">
+            <div class="exp-left">
+              <div class="exp-logo"><img src="./assets/images/3dsmartfactory.png" alt="3DSF" onerror="this.parentElement.textContent='3D'"></div>
+              <div>
+                <div class="exp-role">Data Scientist &amp; Lead Developer</div>
+                <span class="exp-company" style="cursor:default">3D Smart Factory</span>
+                <div class="exp-badges">
+                  <span class="badge b-type">Internship (PFA)</span>
+                  <span class="badge b-date">Jul 2024 – Sep 2024</span>
+                </div>
+              </div>
+              <div class="exp-metrics-side">
+                <div class="esm"><div class="esm-v">87%</div><div class="esm-l">Match Accuracy</div></div>
+                <div class="esm"><div class="esm-v">60%</div><div class="esm-l">Screening Time Saved</div></div>
+                <div class="esm"><div class="esm-v">400+</div><div class="esm-l">CVs Processed</div></div>
+              </div>
+            </div>
+            <div class="exp-right">
+              <div class="exp-summary-box">
+                Developed RucRut — an AI-powered recruitment platform automating CV analysis, semantic candidate-to-job matching, and LLM-generated interview questions. Built end-to-end from NLP models to a full-stack RESTful application with an analytics dashboard.
+              </div>
+              <div>
+                <div class="exp-section-title">Key Achievements</div>
+                <ul class="exp-points">
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Built an automated <strong>CV parsing engine</strong> extracting structured skills, experience, education, and contact data from unstructured PDF/Word resumes using Hugging Face Transformers.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Implemented <strong>vector similarity search</strong> with Sentence Transformers (all-MiniLM-L6-v2), achieving 87% candidate-job matching accuracy — a major leap over keyword-based filtering.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Designed <strong>LLM-powered interview question generation</strong> (LLaMA-based) that dynamically tailors question sets per candidate profile and job description — covering technical, behavioral, and situational questions.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Built a scalable <strong>Flask + MongoDB RESTful backend</strong> with JWT authentication, paginated endpoints, and a modular pipeline architecture supporting concurrent candidate evaluations.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Developed an <strong>Angular analytics dashboard</strong> visualizing recruitment funnel metrics, candidate scoring breakdowns, and skill gap heatmaps for hiring managers.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Reduced manual CV screening time by <strong>60%</strong>, enabling recruiters to focus on high-value candidate interactions instead of administrative filtering.</span></li>
+                </ul>
+              </div>
+              <div>
+                <div class="exp-section-title">Tech Stack</div>
+                <div class="stack">
+                  <span class="tag">Hugging Face</span><span class="tag">Sentence Transformers</span><span class="tag">LLaMA</span><span class="tag">Flask</span><span class="tag">MongoDB</span><span class="tag">Angular</span><span class="tag">Python</span><span class="tag">Scikit-learn</span><span class="tag">NLTK</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6: Royal Air Maroc -->
+        <div class="exp-card">
+          <div class="exp-card-inner">
+            <div class="exp-left">
+              <div class="exp-logo"><img src="./assets/images/royalairmaroc.png" alt="RAM" onerror="this.parentElement.textContent='RAM'"></div>
+              <div>
+                <div class="exp-role">Chatbot Developer</div>
+                <span class="exp-company" style="cursor:default">Royal Air Maroc</span>
+                <div class="exp-badges">
+                  <span class="badge b-type">Internship (PFE)</span>
+                  <span class="badge b-date">Apr 2023 – Jun 2023</span>
+                </div>
+              </div>
+              <div class="exp-metrics-side">
+                <div class="esm"><div class="esm-v">92%</div><div class="esm-l">Intent Accuracy</div></div>
+                <div class="esm"><div class="esm-v">2000+</div><div class="esm-l">Active Users</div></div>
+                <div class="esm"><div class="esm-v">75%</div><div class="esm-l">HR Tickets Reduced</div></div>
+              </div>
+            </div>
+            <div class="exp-right">
+              <div class="exp-summary-box">
+                Developed and deployed an intelligent HR virtual assistant for Royal Air Maroc, automating employee requests for leave balances, payslips, and work certificates — serving 2,000+ staff members directly on WhatsApp.
+              </div>
+              <div>
+                <div class="exp-section-title">Key Achievements</div>
+                <ul class="exp-points">
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Built a <strong>Rasa NLU chatbot</strong> with custom SpaCy NER models covering 50+ distinct HR intent scenarios, achieving <strong>92% intent classification accuracy</strong> on held-out test sets.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Integrated the chatbot with legacy <strong>HR systems via secured Flask REST APIs</strong> — enabling real-time retrieval of leave balances, payslip PDFs, and dynamic work certificate generation.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Deployed to <strong>WhatsApp Business via Twilio</strong>, providing 24/7 automated HR support and reducing manual HR ticket volume by <strong>75%</strong> within the first month post-launch.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Implemented <strong>multi-language support</strong> (French and Arabic) within the dialogue manager, allowing seamless switching based on user language preference during conversations.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Built a <strong>conversation analytics dashboard</strong> (Python + Matplotlib) tracking intent distribution, user satisfaction scores, and knowledge gap identification — fueling continuous NLU model improvement.</span></li>
+                  <li><span class="arr"><i class="fas fa-chevron-right"></i></span><span>Used <strong>Redis</strong> for session state management, ensuring fast context retrieval across multi-turn conversations for 2,000+ concurrent employee sessions.</span></li>
+                </ul>
+              </div>
+              <div>
+                <div class="exp-section-title">Tech Stack</div>
+                <div class="stack">
+                  <span class="tag">Rasa NLU</span><span class="tag">SpaCy</span><span class="tag">Flask</span><span class="tag">Twilio</span><span class="tag">WhatsApp API</span><span class="tag">PostgreSQL</span><span class="tag">Python</span><span class="tag">Redis</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /exp-track -->
+    </div><!-- /exp-track-wrapper -->
+  </div>
 </section>
 
-<a href="#home" aria-label="ScrollTop" class="fas fa-angle-up" id="scroll-top"></a>
+<div class="div"></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.5/typed.min.js" integrity="sha512-1KbKusm/hAtkX5FScVR5G36wodIMnVd/aP04af06iyQTkD17szAMGNmxfNH+tEuFp3Og/P5G32L1qEC47CZbUQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="./assets/js/particles.min.js"></script>
-<script src="./assets/js/app.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js" integrity="sha512-SttpKhJqONuBVxbRcuH0wezjuX+BoFoli0yPsnrAADcHsQMW8rkR84ItFHGIkPvhnlRnE2FaifDOUw+EltbuHg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://unpkg.com/scrollreveal"></script>
-<script type="text/javascript"src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-<script src="./assets/js/script.js"></script>
+<!-- ABOUT -->
+<section id="about">
+  <div class="reveal">
+    <div class="sec-eyebrow">Who I Am</div>
+    <h2 class="sec-title">About <span class="hi">Me</span></h2>
+    <div class="about-card"><p>AI &amp; Data Engineer based in <strong>Casablanca, Morocco</strong>. I hold a Master's degree in Artificial Intelligence &amp; Data Science from <strong>FST Tanger</strong> and a Computer Engineering degree from FST Beni Mellal. Currently Chef de Projet Data &amp; IA at <strong>DataScale Business</strong>.</p></div>
+    <div class="about-card"><p>Oriented toward real impact, I specialize in building <strong>LLM-powered business assistants</strong>, real-time data pipelines, and BI systems that transform complex data into actionable operational value. I thrive at the intersection of AI research and production engineering.</p></div>
+    <div class="about-grid">
+      <div class="about-item"><div class="lbl">Location</div><div class="val">Casablanca, Morocco</div></div>
+      <div class="about-item"><div class="lbl">Email</div><div class="val">omarnouih@gmail.com</div></div>
+      <div class="about-item"><div class="lbl">Phone</div><div class="val">+212 709-725-235</div></div>
+      <div class="about-item"><div class="lbl">Status</div><div class="val" style="color:var(--green)">Open to Opportunities</div></div>
+    </div>
+    <div class="lang-row">
+      <div class="lang-badge"><i class="fas fa-globe" style="color:var(--accent)"></i>Arabic<span class="lang-level">Native</span></div>
+      <div class="lang-badge"><i class="fas fa-globe" style="color:var(--accent)"></i>French<span class="lang-level">Advanced</span></div>
+      <div class="lang-badge"><i class="fas fa-globe" style="color:var(--accent)"></i>English<span class="lang-level">Intermediate</span></div>
+    </div>
+    <div style="margin-top:28px">
+      <div class="principle-card">
+        <div class="p-icon" style="background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.2);color:var(--accent)"><i class="fas fa-bullseye"></i></div>
+        <div><div style="font-weight:700;font-size:.92rem;color:var(--text);margin-bottom:4px">Impact-Driven</div><div style="font-size:.84rem;color:var(--sub)">Every technical decision is grounded in measurable business outcomes. I build for results, not complexity.</div></div>
+      </div>
+      <div class="principle-card">
+        <div class="p-icon" style="background:rgba(129,140,248,.1);border:1px solid rgba(129,140,248,.2);color:var(--accent2)"><i class="fas fa-brain"></i></div>
+        <div><div style="font-weight:700;font-size:.92rem;color:var(--text);margin-bottom:4px">Research to Production</div><div style="font-size:.84rem;color:var(--sub)">I bridge cutting-edge AI research and robust production systems, ensuring models work at scale in real environments.</div></div>
+      </div>
+      <div class="principle-card" style="margin-bottom:0">
+        <div class="p-icon" style="background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);color:var(--green)"><i class="fas fa-users"></i></div>
+        <div><div style="font-weight:700;font-size:.92rem;color:var(--text);margin-bottom:4px">User-Centric Design</div><div style="font-size:.84rem;color:var(--sub)">Complex AI systems should feel simple. Whether it's a chatbot for 2,000+ employees or a BI dashboard, usability comes first.</div></div>
+      </div>
+    </div>
+  </div>
 
+  <div class="about-portrait-col reveal" style="transition-delay:.15s">
+    <div class="about-portrait-frame">
+      <div class="about-portrait-accent"></div>
+      <img src="./assets/images/omar2.png" alt="Omar Nouih"
+        onerror="this.src='./assets/images/5.jpeg'">
+      <div class="about-portrait-caption">
+        <div class="about-portrait-name">Omar Nouih</div>
+        <div class="about-portrait-title">AI &amp; Data Engineer · Casablanca</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="sec-eyebrow">Technical Expertise</div>
+  <h2 class="sec-title">Skills &amp; <span class="hi">Technologies</span></h2>
+  <div class="skills-grid">
+    <div class="skill-card reveal"><div class="skill-card-title"><i class="fas fa-brain"></i>Core AI &amp; ML</div><div class="pills"><span class="pill">Python</span><span class="pill">PyTorch</span><span class="pill">TensorFlow</span><span class="pill">Keras</span><span class="pill">Scikit-learn</span><span class="pill">Transformers (HF)</span><span class="pill">LangChain</span><span class="pill">LLMs / RAG</span><span class="pill">SpaCy / NLP</span><span class="pill">CamemBERT</span><span class="pill">Rasa NLU</span></div></div>
+    <div class="skill-card reveal" style="transition-delay:.07s"><div class="skill-card-title"><i class="fas fa-stream"></i>Big Data &amp; Real-Time</div><div class="pills"><span class="pill">Apache Kafka</span><span class="pill">Apache Spark</span><span class="pill">PySpark</span><span class="pill">Spark Streaming</span><span class="pill">Apache Airflow</span><span class="pill">dbt</span><span class="pill">BigQuery</span><span class="pill">Databricks</span></div></div>
+    <div class="skill-card reveal" style="transition-delay:.12s"><div class="skill-card-title"><i class="fas fa-database"></i>Databases</div><div class="pills"><span class="pill">PostgreSQL</span><span class="pill">MySQL</span><span class="pill">SQL Server</span><span class="pill">Azure SQL</span><span class="pill">MongoDB</span><span class="pill">SQLite</span><span class="pill">Redash</span></div></div>
+    <div class="skill-card reveal" style="transition-delay:.17s"><div class="skill-card-title"><i class="fas fa-code"></i>Backend &amp; Web</div><div class="pills"><span class="pill">Flask</span><span class="pill">FastAPI</span><span class="pill">Django</span><span class="pill">Angular</span><span class="pill">Java / JEE</span><span class="pill">HTML5 / CSS3</span><span class="pill">JavaScript</span><span class="pill">PHP</span></div></div>
+    <div class="skill-card reveal" style="transition-delay:.22s"><div class="skill-card-title"><i class="fas fa-tools"></i>DevOps &amp; Cloud</div><div class="pills"><span class="pill">Docker</span><span class="pill">Git / GitHub</span><span class="pill">Linux (Ubuntu)</span><span class="pill">WhatsApp Business API</span><span class="pill">Twilio</span></div></div>
+    <div class="skill-card reveal" style="transition-delay:.27s"><div class="skill-card-title"><i class="fas fa-chart-line"></i>BI &amp; Visualization</div><div class="pills"><span class="pill">Power BI</span><span class="pill">Looker Studio</span><span class="pill">Matplotlib</span><span class="pill">Seaborn</span><span class="pill">LaTeX</span></div></div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="sec-eyebrow">What I Built</div>
+  <h2 class="sec-title">Featured <span class="hi">Projects</span></h2>
+  <div class="projects-wrapper">
+    <div class="proj-featured reveal">
+      <div class="pf-left">
+        <span class="proj-feat-badge"><i class="fas fa-star"></i>Top Project</span>
+        <div class="proj-title">RucRut — AI Recruitment Platform</div>
+        <div class="proj-desc">An intelligent recruitment platform that automates the entire hiring pipeline. It parses CVs automatically, semantically matches candidates to job requirements, and generates tailored interview questions using LLMs. Built end-to-end as PFA intern at 3D Smart Factory.</div>
+        <div class="ptags">
+          <span class="ptag">Hugging Face</span><span class="ptag">Sentence Transformers</span><span class="ptag">Flask</span><span class="ptag">MongoDB</span><span class="ptag">Angular</span><span class="ptag">LLMs</span><span class="ptag">Python</span><span class="ptag">Scikit-learn</span>
+        </div>
+        <div class="proj-links-row">
+          <a href="https://github.com/OmarNouih/SmartRecruit_LLM" target="_blank" class="pl pl-solid"><i class="fab fa-github"></i>View on GitHub</a>
+          <a href="https://github.com/OmarNouih/SmartRecruit_LLM" target="_blank" class="pl pl-ghost"><i class="fas fa-arrow-up-right-from-square"></i>Demo</a>
+        </div>
+      </div>
+      <div class="pf-right">
+        <div class="feat-point">
+          <div class="fp-icon" style="background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.2);color:var(--accent)"><i class="fas fa-file-alt"></i></div>
+          <div><div class="fp-t">Automated CV Parsing</div><div class="fp-d">Extracts structured data from PDF and Word resumes using Transformer-based NLP — turning unstructured text into actionable candidate profiles.</div></div>
+        </div>
+        <div class="feat-point">
+          <div class="fp-icon" style="background:rgba(129,140,248,.1);border:1px solid rgba(129,140,248,.2);color:var(--accent2)"><i class="fas fa-vector-square"></i></div>
+          <div><div class="fp-t">Semantic Matching Engine</div><div class="fp-d">Vector similarity search with Sentence Transformers captures nuanced skill and experience alignment, far beyond keyword matching.</div></div>
+        </div>
+        <div class="feat-point">
+          <div class="fp-icon" style="background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);color:var(--green)"><i class="fas fa-comments"></i></div>
+          <div><div class="fp-t">LLM Interview Generator</div><div class="fp-d">Generates custom interview questions tailored to each candidate profile and job description using large language models.</div></div>
+        </div>
+        <div class="feat-metrics">
+          <div class="fm"><div class="fm-v">87%</div><div class="fm-l">Match Accuracy</div></div>
+          <div class="fm"><div class="fm-v">60%</div><div class="fm-l">Screening Saved</div></div>
+          <div class="fm"><div class="fm-v">400+</div><div class="fm-l">CVs Processed</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="proj-cards">
+      <div class="proj-card reveal">
+        <div class="pc-top"><div class="pc-icon"><i class="fas fa-comments"></i></div><div class="pc-links"><a href="#" title="Confidential"><i class="fas fa-lock"></i></a></div></div>
+        <div class="pc-name">NL to SQL Chatbot (Labelvie)</div>
+        <div class="pc-desc">Enterprise conversational analytics assistant (GPT-4o + LangChain) deployed on WhatsApp. Translates natural language business questions into precise SQL on Azure databases with RBAC and audit logging.</div>
+        <div class="pc-tags"><span class="ptag">GPT-4o</span><span class="ptag">LangChain</span><span class="ptag">Azure SQL</span><span class="ptag">Flask</span></div>
+      </div>
+      <div class="proj-card reveal" style="transition-delay:.08s">
+        <div class="pc-top"><div class="pc-icon" style="color:var(--accent2)"><i class="fas fa-headset"></i></div><div class="pc-links"><a href="https://github.com/omarnouih" target="_blank"><i class="fab fa-github"></i></a></div></div>
+        <div class="pc-name">HR Chatbot (Royal Air Maroc)</div>
+        <div class="pc-desc">Rasa NLU + SpaCy HR assistant handling leaves, payslips and certificates for 2000+ employees. Deployed on WhatsApp via Twilio. 92% accuracy, 75% ticket reduction.</div>
+        <div class="pc-tags"><span class="ptag">Rasa</span><span class="ptag">SpaCy</span><span class="ptag">Twilio</span><span class="ptag">Flask</span></div>
+      </div>
+      <div class="proj-card reveal" style="transition-delay:.14s">
+        <div class="pc-top"><div class="pc-icon" style="color:var(--green)"><i class="fas fa-stream"></i></div><div class="pc-links"><a href="https://github.com/OmarNouih/Twitter-Streams" target="_blank"><i class="fab fa-github"></i></a></div></div>
+        <div class="pc-name">Real-Time Twitter Sentiment Analysis</div>
+        <div class="pc-desc">End-to-end NLP streaming pipeline using Apache Kafka and Spark Streaming. Real-time sentiment classification with a live web dashboard visualizing social media trends.</div>
+        <div class="pc-tags"><span class="ptag">Kafka</span><span class="ptag">Spark Streaming</span><span class="ptag">NLP</span><span class="ptag">Python</span></div>
+      </div>
+      <div class="proj-card reveal" style="transition-delay:.2s">
+        <div class="pc-top"><div class="pc-icon" style="color:var(--gold)"><i class="fas fa-taxi"></i></div></div>
+        <div class="pc-name">NYC Taxi Data Pipeline</div>
+        <div class="pc-desc">Production-grade ETL pipeline with Airflow orchestration, Kafka ingestion, Spark processing, dbt transformations and a PostgreSQL analytics store.</div>
+        <div class="pc-tags"><span class="ptag">Airflow</span><span class="ptag">Kafka</span><span class="ptag">Spark</span><span class="ptag">dbt</span><span class="ptag">PostgreSQL</span></div>
+      </div>
+      <div class="proj-card reveal" style="transition-delay:.26s">
+        <div class="pc-top"><div class="pc-icon" style="color:var(--accent2)"><i class="fas fa-robot"></i></div><div class="pc-links"><a href="https://github.com/AymanAitAhmed/FSTT-Chatbot" target="_blank"><i class="fab fa-github"></i></a></div></div>
+        <div class="pc-name">FSTT Academic Chatbot</div>
+        <div class="pc-desc">University assistant powered by RAG, LangChain, and vector databases. Scrapes and indexes FSTT content for intelligent student Q&amp;A sessions.</div>
+        <div class="pc-tags"><span class="ptag">LangChain</span><span class="ptag">RAG</span><span class="ptag">Vector DB</span><span class="ptag">LLM</span></div>
+      </div>
+      <div class="proj-card reveal" style="transition-delay:.32s">
+        <div class="pc-top"><div class="pc-icon" style="color:var(--green)"><i class="fas fa-flask"></i></div><div class="pc-links"><a href="https://github.com/OmarNouih/VersaLearn" target="_blank"><i class="fab fa-github"></i></a></div></div>
+        <div class="pc-name">VersaLearn — Data Analysis Tool</div>
+        <div class="pc-desc">Interactive desktop Python tool for data analysis and ML experiments with a Tkinter UI, Pandas, Scikit-learn model training, and Matplotlib visualizations.</div>
+        <div class="pc-tags"><span class="ptag">Python</span><span class="ptag">Tkinter</span><span class="ptag">Scikit-learn</span><span class="ptag">Matplotlib</span></div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:8px">
+      <a href="https://github.com/omarnouih" target="_blank" class="btn-ghost" style="display:inline-flex"><i class="fab fa-github"></i>View All on GitHub</a>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="sec-eyebrow">Academic Background</div>
+  <h2 class="sec-title">My <span class="hi">Education</span></h2>
+  <div class="edu-grid">
+    <div class="edu-card reveal">
+      <img class="edu-img" src="./assets/images/educat/FSTT.jpg" alt="FST Tanger"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="edu-img-placeholder" style="display:none"><i class="fas fa-university" style="font-size:2rem;margin-bottom:8px;color:var(--accent)"></i>FST Tanger</div>
+      <div class="edu-body">
+        <span class="edu-lv">Master's Degree</span>
+        <div class="edu-deg">Intelligence Artificielle &amp; Data Science</div>
+        <div class="edu-sch">Faculté des Sciences et Techniques, Tanger</div>
+        <div class="edu-yr"><i class="far fa-calendar-alt"></i>2023 – 2025</div>
+        <ul class="edu-hi">
+          <li>Deep Learning, NLP, Computer Vision, LLMs &amp; RAG architectures</li>
+          <li>Big Data: Apache Kafka, Spark, Airflow, dbt, BigQuery</li>
+          <li>FSTT Academic Chatbot, Twitter Real-time Sentiment Analysis</li>
+          <li>Master's Thesis: Conversational SQL Assistant deployed on WhatsApp (GPT-4o + LangChain @ Labelvie)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="edu-card reveal" style="transition-delay:.1s">
+      <img class="edu-img" src="./assets/images/educat/FSTBM.jpg" alt="FST Beni Mellal"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="edu-img-placeholder" style="display:none"><i class="fas fa-university" style="font-size:2rem;margin-bottom:8px;color:var(--accent)"></i>FST Beni Mellal</div>
+      <div class="edu-body">
+        <span class="edu-lv" style="background:var(--accent)">Bachelor's Degree</span>
+        <div class="edu-deg">Génie Informatique (Computer Engineering)</div>
+        <div class="edu-sch">Faculté des Sciences et Techniques, Beni Mellal</div>
+        <div class="edu-yr"><i class="far fa-calendar-alt"></i>2019 – 2023</div>
+        <ul class="edu-hi">
+          <li>Software Engineering: Java, C, PHP, algorithms &amp; data structures</li>
+          <li>Databases: SQL, PL/SQL, relational modeling</li>
+          <li>Full-Stack Web development and software architecture patterns</li>
+          <li>PFE: HR Chatbot (Rasa / SpaCy / Twilio) @ Royal Air Maroc</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="sec-eyebrow">Credentials</div>
+  <h2 class="sec-title">Certifications <span class="hi">Achieved</span></h2>
+  <div class="cert-grid">
+    <div class="cert-card reveal">
+      <div class="cert-icon-img">
+        <img src="./assets/images/certa/ML.png" alt="IBM ML Certificate" onerror="this.parentElement.innerHTML='<i class=\'fas fa-award\'></i>'">
+      </div>
+      <div>
+        <div class="cert-name">IBM Machine Learning Professional</div>
+        <div class="cert-issuer">IBM / Coursera</div>
+        <div class="cert-date"><i class="far fa-calendar-alt"></i> April 2024</div>
+        <a href="https://coursera.org/verify/professional-cert/K39QSKVM3XLV" target="_blank" class="cert-verify"><i class="fas fa-external-link-alt"></i>Verify</a>
+      </div>
+    </div>
+    <div class="cert-card reveal" style="transition-delay:.1s">
+      <div class="cert-icon-img">
+        <img src="./assets/images/certa/AI.png" alt="AI Fundamentals Certificate" onerror="this.parentElement.innerHTML='<i class=\'fas fa-microchip\'></i>'">
+      </div>
+      <div>
+        <div class="cert-name">AI Fundamentals</div>
+        <div class="cert-issuer">IBM SkillUp</div>
+        <div class="cert-date"><i class="far fa-calendar-alt"></i> August 2024</div>
+        <a href="https://skills.yourlearning.ibm.com/certificate/share/8914299c08ewogICJvYmplY3RJZCIgOiAiUExBTi1FODVEMDU3MjI2MkMiLAogICJvYmplY3RUeXBlIiA6ICJBQ1RJVklUWSIsCiAgImxlYXJuZXJDTlVNIiA6ICIyNzk4MTU0UkVHIgp9b96ecdcbfc-10" target="_blank" class="cert-verify"><i class="fas fa-external-link-alt"></i>Verify</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="sec-eyebrow">Get In Touch</div>
+  <h2 class="sec-title">Let's <span class="gr">Work Together</span></h2>
+  <div class="contact-wrap">
+    <div class="reveal">
+      <p style="color:var(--sub);font-size:.92rem;line-height:1.85;margin-bottom:24px">I'm currently open to new opportunities — full-time roles, freelance projects, or technical collaborations. Send me a message and I'll get back to you quickly.</p>
+      <div class="contact-cards">
+        <a href="mailto:omarnouih@gmail.com" class="contact-card"><div class="cc-icon"><i class="fas fa-envelope"></i></div><div><div class="cc-lbl">Email</div><div class="cc-val">omarnouih@gmail.com</div></div></a>
+        <a href="tel:+212709725235" class="contact-card"><div class="cc-icon"><i class="fas fa-phone"></i></div><div><div class="cc-lbl">Phone</div><div class="cc-val">+212 709-725-235</div></div></a>
+        <div class="contact-card" style="cursor:default"><div class="cc-icon"><i class="fas fa-map-marker-alt"></i></div><div><div class="cc-lbl">Location</div><div class="cc-val">Casablanca, Morocco</div></div></div>
+      </div>
+      <div class="soc-row">
+        <a href="https://www.linkedin.com/in/omarnouih/" target="_blank" class="soc-btn"><i class="fab fa-linkedin-in"></i>LinkedIn</a>
+        <a href="https://github.com/omarnouih" target="_blank" class="soc-btn"><i class="fab fa-github"></i>GitHub</a>
+        <a href="https://t.me/omar_nouih" target="_blank" class="soc-btn"><i class="fab fa-telegram-plane"></i>Telegram</a>
+      </div>
+    </div>
+    <div class="reveal" style="transition-delay:.15s">
+      <form class="form-wrap" id="contact-form" action="https://formspree.io/f/mkoqgyjk" method="POST">
+        <div class="form-row2">
+          <div class="field"><label for="f-name">Name</label><input type="text" id="f-name" name="name" placeholder="Your name" required></div>
+          <div class="field"><label for="f-email">Email</label><input type="email" id="f-email" name="email" placeholder="your@email.com" required></div>
+        </div>
+        <div class="field"><label for="f-subject">Subject</label><input type="text" id="f-subject" name="subject" placeholder="What is this about?"></div>
+        <div class="field"><label for="f-msg">Message</label><textarea id="f-msg" name="message" placeholder="Tell me about your project..." required></textarea></div>
+        <button type="submit" class="btn-solid" id="submit-btn" style="width:100%;justify-content:center"><i class="fas fa-paper-plane"></i>Send Message</button>
+        <p id="form-status" style="display:none;font-family:var(--mono);font-size:.75rem;text-align:center;padding:10px 14px;border-radius:8px;margin-top:4px;"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 <a href="#home">Omar Nouih</a>. All rights reserved.</p>
+  <p><i class="fas fa-map-marker-alt" style="color:var(--accent);margin-right:5px"></i>Casablanca, Morocco</p>
+</footer>
+
+<a href="#home" id="back-top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></a>
+
+<script>
+  /* ── Header + back to top ── */
+  const hdr = document.getElementById('hdr');
+  const bt = document.getElementById('back-top');
+  window.addEventListener('scroll', () => {
+    hdr.classList.toggle('scrolled', window.scrollY > 20);
+    bt.classList.toggle('show', window.scrollY > 400);
+  });
+
+  /* ── Mobile nav ── */
+  document.getElementById('menu-btn').addEventListener('click', () => {
+    document.getElementById('nav').classList.toggle('open');
+  });
+  document.querySelectorAll('#nav a').forEach(a =>
+    a.addEventListener('click', () => document.getElementById('nav').classList.remove('open'))
+  );
+
+  /* ── Active nav on scroll ── */
+  const secs = document.querySelectorAll('section[id]');
+  const nls = document.querySelectorAll('#nav a[href^="#"]');
+  secs.forEach(s => new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        nls.forEach(l => l.classList.remove('active'));
+        const a = document.querySelector(`#nav a[href="#${e.target.id}"]`);
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { threshold: 0.35 }).observe(s));
+
+  /* ── Reveal ── */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* ── Typing animation ── */
+  const roles = ['AI & Data Engineer', 'Chef de Projet Data & IA', 'LLM Systems Builder', 'Data Pipeline Architect', 'NLP Specialist'];
+  let ri = 0, ci = 0, del = false;
+  const roleEl = document.getElementById('role-el');
+  const tn = document.createTextNode('');
+  const cur = document.createElement('span');
+  cur.className = 'cursor';
+  roleEl.appendChild(tn);
+  roleEl.appendChild(cur);
+  function type() {
+    const t = roles[ri];
+    if (!del) { tn.data = t.slice(0, ++ci); if (ci === t.length) { del = true; setTimeout(type, 2000); return; } }
+    else { tn.data = t.slice(0, --ci); if (ci === 0) { del = false; ri = (ri + 1) % roles.length; } }
+    setTimeout(type, del ? 38 : 78);
+  }
+  type();
+
+
+
+  /* Experience Carousel */
+  (function() {
+    var wrapper = document.querySelector('.exp-track-wrapper');
+    var track = document.getElementById('exp-track');
+    var cards = Array.from(track.querySelectorAll('.exp-card'));
+    var total = cards.length;
+    var current = 0;
+
+    var dotsContainer = document.getElementById('exp-dots');
+    var counter = document.getElementById('exp-counter');
+    var prevBtn = document.getElementById('exp-prev');
+    var nextBtn = document.getElementById('exp-next');
+
+    cards.forEach(function(_, i) {
+      var d = document.createElement('button');
+      d.className = 'exp-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Experience ' + (i + 1));
+      d.addEventListener('click', function() { goTo(i); });
+      dotsContainer.appendChild(d);
+    });
+
+    function getW() { return wrapper.offsetWidth; }
+
+    function goTo(idx) {
+      current = Math.max(0, Math.min(total - 1, idx));
+      track.style.transform = 'translateX(-' + (current * getW()) + 'px)';
+      dotsContainer.querySelectorAll('.exp-dot').forEach(function(d, i) {
+        d.classList.toggle('active', i === current);
+      });
+      counter.textContent = (current + 1) + ' / ' + total;
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === total - 1;
+    }
+
+    prevBtn.addEventListener('click', function() { goTo(current - 1); });
+    nextBtn.addEventListener('click', function() { goTo(current + 1); });
+    window.addEventListener('resize', function() { goTo(current); });
+
+    var touchStartX = 0;
+    track.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', function(e) {
+      var dx = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(dx) > 50) goTo(dx > 0 ? current + 1 : current - 1);
+    });
+
+    document.addEventListener('keydown', function(e) {
+      var rect = document.getElementById('experience').getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        if (e.key === 'ArrowLeft') goTo(current - 1);
+        if (e.key === 'ArrowRight') goTo(current + 1);
+      }
+    });
+
+    goTo(0);
+  })();
+
+  /* Formspree contact form */
+  (function() {
+    var form = document.getElementById('contact-form');
+    var status = document.getElementById('form-status');
+    var btn = document.getElementById('submit-btn');
+    if (!form) return;
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+      var data = new FormData(form);
+      fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      }).then(function(res) {
+        if (res.ok) {
+          status.style.display = 'block';
+          status.style.background = 'rgba(52,211,153,.1)';
+          status.style.border = '1px solid rgba(52,211,153,.3)';
+          status.style.color = 'var(--green)';
+          status.textContent = 'Message sent successfully. I will get back to you soon.';
+          form.reset();
+          btn.innerHTML = '<i class="fas fa-check"></i> Sent';
+        } else {
+          throw new Error('fail');
+        }
+      }).catch(function() {
+        status.style.display = 'block';
+        status.style.background = 'rgba(248,113,113,.1)';
+        status.style.border = '1px solid rgba(248,113,113,.3)';
+        status.style.color = '#f87171';
+        status.textContent = 'Something went wrong. Please email me directly at omarnouih@gmail.com';
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+      });
+    });
+  })();
+
+</script>
 </body>
 </html>

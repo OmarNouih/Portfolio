@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#060608">
+  <title>RucRut · Case Study — Omar Nouih</title>
+  <meta name="description" content="Deep dive: RucRut — AI Recruitment Platform. CV parsing, semantic candidate-job matching, LLM-generated interview questions. 87% match accuracy.">
+  <meta name="author" content="Omar Nouih">
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23060608'/%3E%3Ctext x='50' y='70' text-anchor='middle' font-size='62' font-weight='700' font-family='system-ui,sans-serif' fill='%2300E6D2'%3EO%3C/text%3E%3C/svg%3E">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="RucRut · Case Study">
+  <meta property="og:description" content="AI Recruitment Platform — 87% candidate-job match accuracy, 60% screening time saved.">
+  <meta property="og:image" content="https://omarnouih.github.io/Portfolio/assets/images/COVER%20NOUIH%20OMAR%20(2).png">
+
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+  :root {
+    --bg: #060608; --s1: #0d0d10; --s2: #111116; --s3: #17171d;
+    --border: rgba(255,255,255,.07); --borderH: rgba(167,139,250,.32);
+    --a: #a78bfa; /* purple — RucRut color (3D Smart Factory) */
+    --a2: #c4b5fd; --adim: rgba(167,139,250,.08);
+    --teal: #00E6D2; --gold: #f0b429; --green: #34d399;
+    --text: #EDEDE8; --sub: #7a7a78; --muted: #3e3e3c;
+    --sans: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: var(--body); font-size: 15px; line-height: 1.7;
+    overflow-x: hidden;
+  }
+  ::selection { background: rgba(167,139,250,.25); color: var(--text); }
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--a); border-radius: 2px; }
+
+  /* Noise overlay */
+  body::before {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 180px 180px; opacity: .025;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* Header */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    background: rgba(6,6,8,.72);
+    backdrop-filter: blur(24px) saturate(180%);
+    border-bottom: 1px solid var(--border);
+  }
+  .h-back {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--mono); font-size: .68rem;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: var(--sub); transition: color .2s, transform .2s;
+  }
+  .h-back:hover { color: var(--a); transform: translateX(-3px); }
+  .h-back i { font-size: .7rem; }
+  .h-logo {
+    font-family: var(--sans); font-weight: 700; font-size: .94rem;
+    letter-spacing: -.015em; color: var(--text);
+    display: inline-flex; align-items: center; gap: 9px;
+  }
+  .h-logo span {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--a); box-shadow: 0 0 10px var(--a);
+  }
+  .h-logo em { color: var(--a); font-style: normal; }
+
+  /* Hero — case study cover */
+  .case-hero {
+    padding: 140px 8% 64px;
+    position: relative; z-index: 1;
+    background:
+      radial-gradient(ellipse 50% 40% at 80% 30%, rgba(167,139,250,.12) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 30% at 20% 80%, rgba(0,230,210,.06) 0%, transparent 60%),
+      var(--bg);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .case-hero::before {
+    content: '';
+    position: absolute; top: -200px; right: -150px;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(167,139,250,.16), transparent 70%);
+    pointer-events: none; filter: blur(20px);
+  }
+
+  .case-meta {
+    display: flex; align-items: center; gap: 16px;
+    font-family: var(--mono); font-size: .64rem;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--sub);
+    margin-bottom: 24px;
+  }
+  .case-meta b { color: var(--a); font-weight: 500; }
+  .case-meta .sep { width: 24px; height: 1px; background: var(--border); }
+
+  .case-title {
+    font-family: var(--sans);
+    font-size: clamp(2.6rem, 5.5vw, 4.8rem);
+    font-weight: 700; line-height: .92; letter-spacing: -.04em;
+    color: var(--text); margin-bottom: 18px;
+    max-width: 1000px;
+  }
+  .case-title .grd {
+    background: linear-gradient(120deg, var(--a) 0%, var(--a2) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .case-tagline {
+    font-family: var(--sans); font-size: clamp(1rem, 1.4vw, 1.2rem);
+    line-height: 1.6; color: var(--sub);
+    max-width: 720px; margin-bottom: 36px;
+    letter-spacing: -.005em;
+  }
+  .case-tagline b { color: var(--text); font-weight: 500; }
+
+  /* Metrics row */
+  .case-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--border);
+    border-radius: 14px; overflow: hidden;
+    background: rgba(255,255,255,.012);
+    backdrop-filter: blur(10px);
+    max-width: 880px;
+  }
+  .case-stat {
+    padding: 22px 20px;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+  .case-stat:last-child { border-right: none; }
+  .case-stat-v {
+    font-family: var(--sans); font-size: 1.8rem; font-weight: 700;
+    color: var(--a); letter-spacing: -.04em; line-height: 1;
+  }
+  .case-stat-l {
+    font-family: var(--mono); font-size: .56rem;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: var(--muted); margin-top: 8px;
+  }
+
+  /* Sections */
+  section.case {
+    padding: 96px 8%;
+    position: relative; z-index: 1;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .case-lbl {
+    font-family: var(--mono); font-size: .62rem;
+    letter-spacing: .22em; text-transform: uppercase;
+    color: var(--a);
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 14px;
+  }
+  .case-lbl::before {
+    content: ''; width: 28px; height: 1px; background: var(--a);
+  }
+  .case-lbl .n { color: var(--muted); }
+
+  .case-h {
+    font-family: var(--sans);
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 700; letter-spacing: -.025em; line-height: 1.1;
+    color: var(--text); margin-bottom: 32px;
+  }
+
+  .case-grid-2 {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 56px; align-items: start;
+  }
+  .case-p {
+    font-size: .98rem; color: var(--sub); line-height: 1.85;
+    margin-bottom: 18px;
+  }
+  .case-p b { color: var(--text); font-weight: 500; }
+  .case-p:last-child { margin-bottom: 0; }
+
+  /* Pull-quote */
+  .case-pull {
+    font-family: var(--sans); font-size: clamp(1.2rem, 2vw, 1.5rem);
+    line-height: 1.45; color: var(--text);
+    padding: 28px 0 28px 26px;
+    border-left: 2px solid var(--a);
+    letter-spacing: -.015em;
+    margin: 36px 0;
+  }
+  .case-pull b { color: var(--a); font-weight: 600; }
+
+  /* Architecture diagram */
+  .arch {
+    background: rgba(255,255,255,.015);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px;
+    position: relative; overflow: hidden;
+  }
+  .arch::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--a), transparent);
+  }
+  .arch-flow {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 12px; align-items: stretch;
+    margin-bottom: 24px;
+  }
+  .arch-step {
+    background: rgba(255,255,255,.025);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 14px;
+    text-align: center;
+    position: relative;
+    transition: border-color .25s;
+  }
+  .arch-step:hover { border-color: var(--borderH); }
+  .arch-step:not(:last-child)::after {
+    content: '→';
+    position: absolute; top: 50%; right: -10px; transform: translateY(-50%);
+    color: var(--a); font-size: .85rem;
+    z-index: 2;
+  }
+  .arch-step-n {
+    font-family: var(--mono); font-size: .54rem;
+    letter-spacing: .18em; color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .arch-step-t {
+    font-family: var(--sans); font-size: .88rem; font-weight: 700;
+    color: var(--text); margin-bottom: 6px;
+    letter-spacing: -.01em;
+  }
+  .arch-step-d {
+    font-family: var(--mono); font-size: .58rem;
+    color: var(--sub); line-height: 1.5;
+  }
+  .arch-layer {
+    display: grid; grid-template-columns: 110px 1fr;
+    gap: 18px; padding: 14px 0;
+    border-top: 1px solid var(--border);
+    align-items: center;
+  }
+  .arch-layer-lbl {
+    font-family: var(--mono); font-size: .58rem;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: var(--a);
+  }
+  .arch-layer-stack {
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .arch-pill {
+    font-family: var(--mono); font-size: .66rem;
+    color: var(--sub);
+    background: rgba(255,255,255,.025);
+    border: 1px solid var(--border);
+    border-radius: 6px; padding: 5px 10px;
+  }
+
+  /* Decision blocks */
+  .decisions { display: grid; gap: 22px; }
+  .dec {
+    display: grid; grid-template-columns: 60px 1fr;
+    gap: 24px;
+    padding-bottom: 26px;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+  .dec:last-child { border-bottom: none; padding-bottom: 0; }
+  .dec-n {
+    font-family: var(--sans); font-size: 1.8rem; font-weight: 700;
+    color: var(--a); letter-spacing: -.04em; line-height: 1;
+    padding-top: 4px;
+  }
+  .dec-q {
+    font-family: var(--sans); font-size: 1.1rem; font-weight: 700;
+    color: var(--text); letter-spacing: -.018em;
+    margin-bottom: 10px;
+  }
+  .dec-a {
+    font-size: .92rem; color: var(--sub); line-height: 1.8;
+    margin-bottom: 8px;
+  }
+  .dec-a b { color: var(--text); font-weight: 500; }
+  .dec-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--mono); font-size: .56rem;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: var(--a);
+    margin-top: 8px;
+  }
+  .dec-tag::before {
+    content: ''; width: 14px; height: 1px; background: var(--a);
+  }
+
+  /* Code snippet */
+  .code {
+    background: var(--s1);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 24px;
+    font-family: var(--mono); font-size: .78rem;
+    line-height: 1.7; color: var(--sub);
+    overflow-x: auto;
+    position: relative;
+  }
+  .code::before {
+    content: attr(data-lang);
+    position: absolute; top: 12px; right: 16px;
+    font-size: .56rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .code .k { color: var(--a); }
+  .code .s { color: var(--green); }
+  .code .c { color: var(--muted); }
+  .code .v { color: var(--text); }
+
+  /* Lessons */
+  .lessons {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .lesson {
+    background: linear-gradient(180deg, var(--s1) 0%, rgba(13,13,16,.4) 100%);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    transition: border-color .3s, transform .3s;
+    position: relative;
+  }
+  .lesson::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 40px; height: 2px;
+    background: var(--a);
+  }
+  .lesson:hover { border-color: var(--borderH); transform: translateY(-3px); }
+  .lesson-n {
+    font-family: var(--mono); font-size: .56rem;
+    letter-spacing: .2em; color: var(--a);
+    margin-bottom: 14px;
+  }
+  .lesson-t {
+    font-family: var(--sans); font-size: 1rem; font-weight: 700;
+    color: var(--text); margin-bottom: 8px;
+    letter-spacing: -.015em;
+  }
+  .lesson-d {
+    font-size: .84rem; color: var(--sub); line-height: 1.7;
+  }
+
+  /* CTA */
+  .case-cta {
+    padding: 88px 8% 96px;
+    text-align: center;
+    background: linear-gradient(180deg, transparent 0%, rgba(167,139,250,.04) 100%);
+    border-bottom: none;
+  }
+  .case-cta h2 {
+    font-family: var(--sans); font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 700; color: var(--text);
+    letter-spacing: -.025em; line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .case-cta p {
+    font-size: .94rem; color: var(--sub); line-height: 1.8;
+    max-width: 520px; margin: 0 auto 32px;
+  }
+  .cta-row { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--sans); font-size: .9rem; font-weight: 600;
+    padding: 14px 26px; border-radius: 100px;
+    transition: all .25s cubic-bezier(.34,1.56,.64,1);
+    text-decoration: none;
+  }
+  .btn-fill {
+    color: var(--bg); background: var(--a);
+    box-shadow: 0 6px 24px rgba(167,139,250,.35), inset 0 0 0 1px rgba(255,255,255,.18);
+  }
+  .btn-fill:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(167,139,250,.5); }
+  .btn-ghost {
+    color: var(--text); border: 1px solid var(--border);
+    background: rgba(255,255,255,.02);
+  }
+  .btn-ghost:hover { border-color: var(--a); color: var(--a); transform: translateY(-2px); }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 8%;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 10px;
+  }
+  footer p {
+    font-family: var(--mono); font-size: .62rem;
+    letter-spacing: .14em; color: var(--muted);
+  }
+  footer a { color: var(--a); }
+
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* Responsive */
+  @media (max-width: 1100px) {
+    .case-stats { grid-template-columns: repeat(2, 1fr); }
+    .case-stat:nth-child(2) { border-right: none; }
+    .case-stat:nth-child(1), .case-stat:nth-child(2) { border-bottom: 1px solid var(--border); }
+    .case-grid-2 { grid-template-columns: 1fr; gap: 32px; }
+    .arch-flow { grid-template-columns: repeat(2, 1fr); }
+    .arch-step:nth-child(2)::after { display: none; }
+    .lessons { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .case-hero { padding: 110px 6% 48px; }
+    section.case { padding: 64px 6%; }
+    .case-cta { padding: 64px 6%; }
+    .arch { padding: 22px; }
+    .arch-flow { grid-template-columns: 1fr; }
+    .arch-step::after { display: none; }
+    .dec { grid-template-columns: 1fr; gap: 8px; }
+  }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="./index.html" class="h-back"><i class="fas fa-arrow-left"></i>Back to Portfolio</a>
+  <a href="./index.html#home" class="h-logo"><span></span>Omar Nouih<em>.</em></a>
+</header>
+
+<!-- HERO -->
+<div class="case-hero">
+  <div class="case-meta">
+    <b>Case N°00 · Featured</b>
+    <span class="sep"></span>
+    <span>Jul — Sep 2024</span>
+    <span class="sep"></span>
+    <span>3D Smart Factory · PFA Internship</span>
+  </div>
+  <h1 class="case-title">RucRut.<br><span class="grd">AI Recruitment</span> reimagined.</h1>
+  <p class="case-tagline">An end-to-end platform that automates the hiring pipeline — <b>CV parsing</b>, <b>semantic candidate-to-job matching</b>, and <b>LLM-generated interview questions</b>. Built from NLP models to a full-stack RESTful app with analytics dashboard.</p>
+
+  <div class="case-stats">
+    <div class="case-stat">
+      <div class="case-stat-v">87%</div>
+      <div class="case-stat-l">Match Accuracy</div>
+    </div>
+    <div class="case-stat">
+      <div class="case-stat-v">60%</div>
+      <div class="case-stat-l">Screening Time Saved</div>
+    </div>
+    <div class="case-stat">
+      <div class="case-stat-v">400+</div>
+      <div class="case-stat-l">CVs Processed</div>
+    </div>
+    <div class="case-stat">
+      <div class="case-stat-v">3 mo</div>
+      <div class="case-stat-l">From Zero to Demo</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="case">
+  <div class="case-lbl"><span class="n">01 /</span> Problem</div>
+  <h2 class="case-h reveal">Hiring teams drown in CVs while<br>good candidates slip through keyword filters.</h2>
+
+  <div class="case-grid-2 reveal">
+    <div>
+      <p class="case-p">3D Smart Factory's HR pipeline relied on <b>keyword-based ATS filtering</b> — fast but blunt. Strong candidates were getting rejected because their resumes phrased experience differently than the job description. Meanwhile recruiters spent ~80% of their first-pass time on manual triage.</p>
+      <p class="case-p">The goal: a system that <b>understands semantic intent</b>, not just term frequency. One that ranks candidates by genuine fit, summarizes their profile, and prepares the interviewer with tailored questions before the first call.</p>
+    </div>
+    <div>
+      <div class="case-pull">"Most ATS reject 70% of qualified candidates before a human ever sees the resume. <b>We wanted to flip that ratio.</b>"</div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section class="case">
+  <div class="case-lbl"><span class="n">02 /</span> Architecture</div>
+  <h2 class="case-h reveal">A 4-stage pipeline from raw PDF<br>to interview-ready brief.</h2>
+
+  <div class="arch reveal">
+    <div class="arch-flow">
+      <div class="arch-step">
+        <div class="arch-step-n">01 · Ingest</div>
+        <div class="arch-step-t">CV Parsing</div>
+        <div class="arch-step-d">PDF/DOCX → structured JSON (skills, experience, education) via Transformer NER.</div>
+      </div>
+      <div class="arch-step">
+        <div class="arch-step-n">02 · Embed</div>
+        <div class="arch-step-t">Vector Encoding</div>
+        <div class="arch-step-d">Sentence-Transformers encode CV + job description into a shared 768-dim space.</div>
+      </div>
+      <div class="arch-step">
+        <div class="arch-step-n">03 · Match</div>
+        <div class="arch-step-t">Semantic Ranking</div>
+        <div class="arch-step-d">Cosine similarity + reranker scores each CV against the role. Top-K returned.</div>
+      </div>
+      <div class="arch-step">
+        <div class="arch-step-n">04 · Generate</div>
+        <div class="arch-step-t">LLM Brief</div>
+        <div class="arch-step-d">LLaMA generates per-candidate interview questions and a recruiter summary.</div>
+      </div>
+    </div>
+
+    <div class="arch-layer">
+      <div class="arch-layer-lbl">ML Stack</div>
+      <div class="arch-layer-stack"><span class="arch-pill">Hugging Face</span><span class="arch-pill">Sentence-Transformers</span><span class="arch-pill">LLaMA</span><span class="arch-pill">PyTorch</span><span class="arch-pill">SpaCy NER</span></div>
+    </div>
+    <div class="arch-layer">
+      <div class="arch-layer-lbl">Backend</div>
+      <div class="arch-layer-stack"><span class="arch-pill">Flask</span><span class="arch-pill">JWT Auth</span><span class="arch-pill">REST API</span><span class="arch-pill">MongoDB</span></div>
+    </div>
+    <div class="arch-layer">
+      <div class="arch-layer-lbl">Frontend</div>
+      <div class="arch-layer-stack"><span class="arch-pill">Angular</span><span class="arch-pill">TypeScript</span><span class="arch-pill">Chart.js</span></div>
+    </div>
+    <div class="arch-layer">
+      <div class="arch-layer-lbl">Ops</div>
+      <div class="arch-layer-stack"><span class="arch-pill">Docker</span><span class="arch-pill">Git</span><span class="arch-pill">Postman</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- KEY DECISIONS -->
+<section class="case">
+  <div class="case-lbl"><span class="n">03 /</span> Key Decisions</div>
+  <h2 class="case-h reveal">Three calls that defined the result.</h2>
+
+  <div class="decisions">
+    <div class="dec reveal">
+      <span class="dec-n">01</span>
+      <div>
+        <div class="dec-q">Why semantic embeddings over a fine-tuned classifier?</div>
+        <p class="dec-a">A classifier would have needed labeled CV/job pairs — we had none. <b>Embeddings let us bootstrap from a frozen Sentence-Transformers model</b> and tune the similarity threshold empirically. Six weeks of dev time saved, no labeled-data bottleneck.</p>
+        <span class="dec-tag">Pragmatism over perfection</span>
+      </div>
+    </div>
+
+    <div class="dec reveal">
+      <span class="dec-n">02</span>
+      <div>
+        <div class="dec-q">Why LLaMA for interview questions instead of GPT?</div>
+        <p class="dec-a">HR data couldn't leave the company VPC for compliance reasons. LLaMA running locally on a GPU instance gave us <b>full data sovereignty</b> with acceptable latency (~4s per generation). GPT-3.5 was marginally better but a non-starter on legal review.</p>
+        <span class="dec-tag">Compliance shaped the model choice</span>
+      </div>
+    </div>
+
+    <div class="dec reveal">
+      <span class="dec-n">03</span>
+      <div>
+        <div class="dec-q">Why ship an Angular dashboard and not just a JSON API?</div>
+        <p class="dec-a">Recruiters don't read JSON. The dashboard turned the matching score into <b>a ranked, filterable, exportable list</b> with one-click "summarize" and "send to interviewer" actions. The UI was what made adoption happen — the model was just an input.</p>
+        <span class="dec-tag">UX is part of the model</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CODE EXCERPT -->
+<section class="case">
+  <div class="case-lbl"><span class="n">04 /</span> Code Excerpt</div>
+  <h2 class="case-h reveal">The matching loop, simplified.</h2>
+
+  <pre class="code reveal" data-lang="python"><span class="c"># core/matching.py — the heart of the ranking pipeline</span>
+<span class="k">from</span> <span class="v">sentence_transformers</span> <span class="k">import</span> <span class="v">SentenceTransformer, util</span>
+
+<span class="v">model</span> <span class="k">=</span> <span class="v">SentenceTransformer</span>(<span class="s">"sentence-transformers/all-mpnet-base-v2"</span>)
+
+<span class="k">def</span> <span class="v">rank_candidates</span>(<span class="v">job_desc</span>: <span class="v">str</span>, <span class="v">cvs</span>: <span class="v">list[dict]</span>) <span class="k">-&gt;</span> <span class="v">list[dict]</span>:
+    <span class="c"># 1. embed the job description once</span>
+    <span class="v">job_vec</span> <span class="k">=</span> <span class="v">model.encode</span>(<span class="v">job_desc</span>, <span class="v">convert_to_tensor</span><span class="k">=</span><span class="v">True</span>)
+
+    <span class="c"># 2. embed each parsed CV (cached if seen before)</span>
+    <span class="v">cv_vecs</span> <span class="k">=</span> <span class="v">model.encode</span>(
+        [<span class="v">cv</span>[<span class="s">"summary"</span>] <span class="k">for</span> <span class="v">cv</span> <span class="k">in</span> <span class="v">cvs</span>],
+        <span class="v">convert_to_tensor</span><span class="k">=</span><span class="v">True</span>,
+        <span class="v">show_progress_bar</span><span class="k">=</span><span class="v">False</span>,
+    )
+
+    <span class="c"># 3. cosine similarity gives a [0,1] fit score per candidate</span>
+    <span class="v">scores</span> <span class="k">=</span> <span class="v">util.cos_sim</span>(<span class="v">job_vec</span>, <span class="v">cv_vecs</span>)[0]
+
+    <span class="c"># 4. zip + sort, return top matches with diagnostic context</span>
+    <span class="k">return</span> <span class="v">sorted</span>(
+        [{<span class="k">**</span><span class="v">cv</span>, <span class="s">"score"</span>: <span class="v">float</span>(<span class="v">s</span>)} <span class="k">for</span> <span class="v">cv</span>, <span class="v">s</span> <span class="k">in</span> <span class="v">zip</span>(<span class="v">cvs</span>, <span class="v">scores</span>)],
+        <span class="v">key</span><span class="k">=</span><span class="k">lambda</span> <span class="v">c</span>: <span class="v">c</span>[<span class="s">"score"</span>], <span class="v">reverse</span><span class="k">=</span><span class="v">True</span>,
+    )</pre>
+</section>
+
+<!-- RESULTS & LESSONS -->
+<section class="case">
+  <div class="case-lbl"><span class="n">05 /</span> Outcomes &amp; Lessons</div>
+  <h2 class="case-h reveal">What shipped, what worked, what we'd do differently.</h2>
+
+  <div class="case-pull reveal">RucRut went from a blank repo to a <b>functioning internal tool screening 400+ CVs</b> in three months. The 87% match accuracy benchmark was set by hand-labeling 100 known-good pairs.</div>
+
+  <div class="lessons">
+    <div class="lesson reveal">
+      <div class="lesson-n">Lesson 01</div>
+      <div class="lesson-t">Embeddings ≠ understanding</div>
+      <div class="lesson-d">Cosine similarity catches semantic overlap but misses negations and seniority signals. We added a lightweight rule layer on top — biggest single accuracy bump.</div>
+    </div>
+    <div class="lesson reveal" style="transition-delay:.08s">
+      <div class="lesson-n">Lesson 02</div>
+      <div class="lesson-t">Latency is a UX feature</div>
+      <div class="lesson-d">LLM generation took 4s per CV. We batched in the background and surfaced results progressively in the UI — perceived speed went up without touching the model.</div>
+    </div>
+    <div class="lesson reveal" style="transition-delay:.16s">
+      <div class="lesson-n">Lesson 03</div>
+      <div class="lesson-t">Recruiters don't trust black boxes</div>
+      <div class="lesson-d">The first version returned a score and nothing else. Adoption was zero. Once we added <b>why each candidate ranked where they did</b>, usage took off.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="case-cta">
+  <h2>Like the way I work?</h2>
+  <p>Always open to new AI &amp; data engineering challenges. If you have a project that needs this kind of attention, let's talk.</p>
+  <div class="cta-row">
+    <a href="./index.html#contact" class="btn btn-fill">Get in touch<i class="fas fa-arrow-right"></i></a>
+    <a href="https://github.com/OmarNouih/SmartRecruit_LLM" target="_blank" class="btn btn-ghost"><i class="fab fa-github"></i>View on GitHub</a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <a href="./index.html">Omar Nouih</a> — All rights reserved.</p>
+  <p>Casablanca, Morocco</p>
+</footer>
+
+<script>
+document.querySelectorAll('.reveal').forEach(el =>
+  new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('in');
+  }), { threshold: .08 }).observe(el)
+);
+</script>
+
+</body>
+</html>
